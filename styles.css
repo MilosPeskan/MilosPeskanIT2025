@@ -15,7 +15,7 @@ body {
 }
 
 footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     background-color: transparent;
@@ -296,7 +296,7 @@ footer {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(4, 1fr); 
     gap: 16px;
     padding: 20px;
     box-sizing: border-box;
@@ -382,13 +382,15 @@ footer {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
     gap: 16px;
+    align-items: center;
     left: 50%;
     margin-top: auto;
 }
 
 .counter {
     text-align:center;
-    background-color: aliceblue;
+    font-family: "TheGodfather";
+    font-size: 150%;
 }
 
 .ribbon {
@@ -564,5 +566,8 @@ footer {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(10, 1fr);
         row-gap: 10px;
+    }
+    .cardHolder {
+        grid-template-columns: repeat(2, 1fr); 
     }
 }
