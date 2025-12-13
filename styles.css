@@ -33,7 +33,7 @@ footer {
 #mainMenu {
     display: flex;
     background-color: black;
-    background-image: url("/resourses/main_menu_bg.png");
+    background-image: url("resourses/main_menu_bg.png");
     background-repeat: no-repeat;
 }
 
@@ -67,7 +67,7 @@ footer {
     right: 0;
     top: 0;
     transform: translate(20%, -10%);
-    background-image: url(/resourses/dodaj.png);
+    background-image: url(resourses/dodaj.png);
     height: 85px;
     width: 85px;
     background-color: transparent;
@@ -192,7 +192,7 @@ footer {
 #startButton {
     width: 100%;
     height: 100%;
-    background-image: url(/resourses/start.png);
+    background-image: url(resourses/start.png);
     background-color: transparent;
     background-repeat: no-repeat;
     outline: none;
@@ -206,7 +206,7 @@ footer {
 #nightButton {
     width: 100%;
     height: 100%;
-    background-image: url(/resourses/start.png);
+    background-image: url(resourses/start.png);
     background-color: transparent;
     background-repeat: no-repeat;
     outline: none;
@@ -224,7 +224,7 @@ footer {
     height: 12vh;
     aspect-ratio: 1;
     margin: 1vh;
-    background-image: url(/resourses/back.png);
+    background-image: url(resourses/back.png);
     background-color: transparent;
     background-repeat: no-repeat;
     outline: none;
@@ -251,7 +251,7 @@ footer {
 
 #revealRole {
     position: absolute;
-    background-image: url(/resourses/otkrij.png);
+    background-image: url(resourses/otkrij.png);
     color: wheat;
     left: 50%;
     width: 375px;
@@ -314,7 +314,7 @@ footer {
 #settingsButton {
     width: 100%;
     height: 100%;
-    background-image: url(/resourses/dalje.png);
+    background-image: url(resourses/dalje.png);
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: center;
@@ -346,7 +346,7 @@ footer {
 }
 
 .infoCard {
-    mask-image: url(/resourses/cardBorder.png);
+    mask-image: url(resourses/cardBorder.png);
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
     mask-position: center;
@@ -407,7 +407,7 @@ footer {
     top: 0;
     height: 100%;
     aspect-ratio: 1;
-    background-image: url(/resourses/back.png);
+    background-image: url(resourses/back.png);
     background-color: transparent;
     background-repeat: no-repeat;
     outline: none;
@@ -464,7 +464,7 @@ footer {
     width: 20vh;
     aspect-ratio: 1;
     margin: 1.5vw;
-    background-image: url(/resourses/back.png);
+    background-image: url(resourses/back.png);
     background-color: transparent;
     background-repeat: no-repeat;
     outline: none;
@@ -496,7 +496,7 @@ footer {
 
 .actionButton{
     font-size: 1.5em;
-    background-image: url(/resourses/otkrij.png);
+    background-image: url(resourses/otkrij.png);
     color: wheat;
     background-color: transparent;
     background-repeat: no-repeat;
@@ -512,7 +512,7 @@ footer {
 }
 
 .removeRole {
-    background-image: url(/resourses/arrow.png);
+    background-image: url(resourses/arrow.png);
     transform: scale(-1, -1);
     aspect-ratio: 1;
     background-color: transparent;
@@ -523,7 +523,7 @@ footer {
     background-position: center;
 }
 .addRole {
-    background-image: url(/resourses/arrow.png);
+    background-image: url(resourses/arrow.png);
     aspect-ratio: 1;
     background-color: transparent;
     background-repeat: no-repeat;
@@ -535,7 +535,7 @@ footer {
 
 @media (max-width: 767px) {
     #mainMenu {
-        background-image: url("/resourses/main_menu_bg_phone.png");
+        background-image: url("resourses/main_menu_bg_phone.png");
         background-size: contain;
     }
     #title {
