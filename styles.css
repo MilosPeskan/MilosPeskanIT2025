@@ -1,0 +1,568 @@
+@font-face {
+    font-family: "TheGodfather";
+    src: url("resourses/fonts/Bondrians.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Title";
+    src: url("resourses/fonts/Faith\ Collapsing.ttf") format("truetype");
+}
+
+body {
+    max-width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: transparent;
+    color: wheat;
+}
+
+.menu {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: #202020;
+}
+
+#mainMenu {
+    display: flex;
+    background-color: black;
+    background-image: url("/resourses/main_menu_bg.png");
+    background-repeat: no-repeat;
+}
+
+#title {
+    position: absolute;
+    left: 15%;
+    top: -5%;
+    font-size: 12vh;
+    font-family: "Title";
+    color: wheat;
+}
+
+#subtitle {
+    display: flex;
+    justify-content: center;
+    color: wheat;
+    width: 100%;
+}
+
+#inputNameDivider {
+    position: absolute;
+    display: flex;
+    width: 40%;
+    height: 100%;
+    align-content: center;
+    justify-content: center;
+}
+
+#addPlayer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate(20%, -10%);
+    background-image: url(/resourses/dodaj.png);
+    height: 85px;
+    width: 85px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    color:white;
+}
+
+#inputName {
+    background-color: #303d43;
+    outline: 5px solid rgb(255, 255, 255);
+    border: 4px solid rgb(0, 0, 0);
+    border-radius: 25px;
+    width: 332px;
+    height: 58px;
+    text-align: center;
+    text-justify:distribute;
+    font-size: 150%;
+    color: rgb(184, 171, 171);
+    display: block;
+}
+
+#inputName::placeholder {
+    color: rgb(184, 171, 171);
+}
+
+#playerInputForm{
+    position: absolute;
+    bottom: 0;
+    left: 12%;
+    margin-bottom: 5vh;
+    align-items: center;
+    justify-items: center;
+}
+
+#playerListDivider{
+    position: absolute;
+    display: flex;
+    left: 40%;
+    width: 60%;
+    height: 100%;
+    align-content: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#deskripcija {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: wheat;
+    text-align: center;
+}
+
+#pravila {
+    margin: 1%;
+    height: fit-content;
+    background-color: #303d43;
+    outline: 2px solid rgb(255, 255, 255);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 3px;
+    color: #f9f9f9;
+    z-index: 100;
+}
+
+#listOfPlayers {
+    position: relative;
+    padding: 20px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    column-gap: 10px;
+    row-gap: 10px;
+    justify-self: center;
+    align-self: center;
+    font-size: 6vh;
+    width: 100%;
+    height: 100%;
+}
+
+#listOfPlayers li{
+    display: flex;
+    position: relative;
+    justify-self: center;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-size: 4.5vh;
+    width: 100%;
+    height: 100%;
+    padding: 0.5vh;
+    color: wheat;
+}
+
+#deleteButton {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #303d43;
+    outline: 2px solid rgb(255, 255, 255);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 3px;
+    color: rgb(184, 171, 171);
+}
+
+#start {
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30vw;
+    height: 100%;
+}
+
+#startButton {
+    width: 100%;
+    height: 100%;
+    background-image: url(/resourses/start.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    color:white;
+    background-size: contain;
+    background-position: center;
+    font-size: 150%;
+}
+
+#nightButton {
+    width: 100%;
+    height: 100%;
+    background-image: url(/resourses/start.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    color:white;
+    background-size: contain;
+    background-position: center;
+    font-size: 150%;
+}
+
+#back {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 12vh;
+    aspect-ratio: 1;
+    margin: 1vh;
+    background-image: url(/resourses/back.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    color:white;
+    background-size: contain;
+    background-position: center;
+    font-size: 90%;
+}
+
+#roleSelectionContent {
+    width: 100%;
+    height: 100%;
+    background-color: #202020;
+    align-items: center;
+    justify-items: center;
+}
+
+#player {
+    font-family: "TheGodFather";
+    font-size: 5em;
+    color: wheat;
+}
+
+#revealRole {
+    position: absolute;
+    background-image: url(/resourses/otkrij.png);
+    color: wheat;
+    left: 50%;
+    width: 375px;
+    height: 77px;
+    transform: translateX(-50%); 
+    bottom: 30vh;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    color:white;
+    font-size: 150%;
+}
+
+#warning {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); 
+    color: wheat;
+    font-size: 1.5em;
+    bottom: 10vh;
+    display: none;
+    text-align: center;
+}
+
+#roleHolder {
+    width: 100%;
+    height: 50%;
+    display: none;
+    justify-items: center;
+    align-content: center;
+    font-size: 1.5em;
+    color: wheat;
+    transform: translateY(-45%);
+}
+
+#roleHolder p {
+    text-align: center;
+}
+
+.cardHolder {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 16px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#settings {
+    position: absolute;
+    top:20%;
+    left: 18%;
+    transform: translate(-10%, 20%); 
+    width: 143px;
+    height: 152px;
+}
+
+#settingsButton {
+    width: 100%;
+    height: 100%;
+    background-image: url(/resourses/dalje.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+}
+
+#settingsMenu {
+    height: auto;
+    background-color: #202020;
+}
+
+.card {
+  border: 1px solid #302c2c;
+  border-radius: 10px;
+  padding: 12px;
+  background: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card h3 {
+    font-size: 1.2em;
+}
+
+.infoCard {
+    mask-image: url(/resourses/cardBorder.png);
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    
+
+    font-size: 1em;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.roleName {
+  margin: 0 0 8px 0;
+  font-weight: bold;
+}
+
+.roleAlignment {
+  color: #202020;
+  font-style: italic;
+}
+
+.roleCategory {
+  color: #414040;
+}
+
+.roleDescription {
+  margin-top: 6px;
+}
+
+.numberDiv {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 16px;
+    left: 50%;
+    margin-top: auto;
+}
+
+.counter {
+    text-align:center;
+    background-color: aliceblue;
+}
+
+.ribbon {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10vh;
+    z-index: 10;
+    background-color: black;
+}
+
+.cancel {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    aspect-ratio: 1;
+    background-image: url(/resourses/back.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    color:white;
+    background-size: contain;
+    background-position: center;
+    font-size: 90%;
+}
+
+#playerHolder {
+    max-height: 2em;
+}
+
+#wakeUpRole {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    align-content: center;
+    font-size: 2em;
+    margin: 0;
+    color: wheat;
+}
+
+#addToAmnesiac {
+    display: none;
+}
+
+#infoRole {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    align-content: center;
+    justify-items: center;
+    color: wheat;
+    font-size: 1.5em;
+}
+
+#infoRole p {
+    text-align: center;
+}
+
+#infoRole h3 {
+    font-family: "TheGodfather";
+    font-size: 4em;
+    line-height: 0.2em;
+}
+
+#backToManager {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 20vh;
+    aspect-ratio: 1;
+    margin: 1.5vw;
+    background-image: url(/resourses/back.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    color:white;
+    background-size: contain;
+    background-position: center;
+    font-size: 150%;
+}
+
+.card[data-status="dead"] {
+    background-color: #ff0000;
+}
+
+#buttonHolder{
+    position: absolute;
+    width: 50vh;
+    height: 20vh;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); 
+    gap: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 1.5vh;
+}
+
+.actionButton{
+    font-size: 1.5em;
+    background-image: url(/resourses/otkrij.png);
+    color: wheat;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    outline: none;
+    border: none;
+    color:white;
+}
+
+#secondAction{
+    display: none;
+}
+
+.removeRole {
+    background-image: url(/resourses/arrow.png);
+    transform: scale(-1, -1);
+    aspect-ratio: 1;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    background-size: contain;
+    background-position: center;
+}
+.addRole {
+    background-image: url(/resourses/arrow.png);
+    aspect-ratio: 1;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    background-size: contain;
+    background-position: center;
+}
+
+@media (max-width: 767px) {
+    #mainMenu {
+        background-image: url("/resourses/main_menu_bg_phone.png");
+        background-size: contain;
+    }
+    #title {
+        position: absolute;
+        left: 50%;
+        top: -8%;
+        transform: translateX(-50%);
+        font-size: 10vh;
+    }
+    #playerInputForm{
+        position: absolute;
+        bottom: 50%;
+        left: 12%;
+        margin-bottom: 5vh;
+        align-items: center;
+        justify-items: center;
+    }
+    #playerListDivider{
+        left: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 50%;
+        overflow-y: scroll;
+    }
+    #listOfPlayers {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(10, 1fr);
+        row-gap: 10px;
+    }
+}

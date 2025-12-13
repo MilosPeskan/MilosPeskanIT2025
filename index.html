@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="apple-touch-icon" sizes="57x57" href="resourses/favicon/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="resourses/favicon/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="resourses/favicon/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="resourses/favicon/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="resourses/favicon/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="resourses/favicon/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="resourses/favicon/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="resourses/favicon/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="resourses/favicon/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="resourses/favicon/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="resourses/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="resourses/favicon/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="resourses/favicon/favicon-16x16.png">
+        <link rel="manifest" href="resourses/favicon/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="resourses/favicon/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+        <title>Mafia - Besplatni Alat za Vođenje Igre | Online</title>
+        <meta name="description" content="Besplatni online alat za naratore društvene igre Mafija. Pratite uloge igrača, noćne akcije, eliminacije i glasanja. Organizujte savršenu partiju sa digitalnim asistentom.">
+        <meta name="keywords" content="mafija, društvena igra mafija, mafija online, pomoćnik za mafiju, mafija menadžer, mafija alat, mafija game master, mafija aplikacija, igra mafija pomoćnik, mafija narator, mafija game master, mafija menadžer za naratore, alat za vođenje igre">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div id="mainMenu" class="menu">
+            <h1 id="title">Mafija</h1>
+            <div id="inputNameDivider"></div>
+                <form id="playerInputForm">
+                    <input type="text" id="inputName" placeholder="Unesite ime igrača">
+                    <button type="submit" id="addPlayer"> Dodaj </button>
+                </form>
+            <div id="playerListDivider">
+                <div id="deskripcija">
+                    <h3>Čemu služi online mafija alat za naratore</h3>
+                    <p>
+                        Da li ste umorni od mešanja papirića i zaboravljanja ko je koga ubio? 
+                        <strong>Mafija Narator</strong> je vaš novi najbolji prijatelj! 
+                        Ovaj <strong>online alat za Mafiju</strong> pomaže naratorima da vode 
+                        igru kao profesionalci. Dodeljujte uloge, pratite noćne akcije i 
+                        eliminacije i vodite kompletnu evidenciju igre - sve na jednom mestu. 
+                        Bilo da igrašte klasičnu Mafiju ili varijante sa drugačijim ulogama, naš 
+                        <strong>game master tool</strong> čini svaku partiju glatkom i organizovanom. 
+                        </p>
+                </div>
+                <ul id="listOfPlayers"></ul>
+            </div>
+            <div id="settings">
+                <button id="settingsButton"> Dalje </button>
+            </div>
+            <a href="https://sr.wikipedia.org/wiki/%D0%9C%D0%B0%D1%84%D0%B8%D1%98%D0%B0_(%D0%B8%D0%B3%D1%80%D0%B0)" id="pravila" >Više o igri Mafija</a>
+        </div>
+        <div id="roleSelection" class="menu">
+             <div id="roleSelectionContent">
+                <h1 id="player"> Igrač placeholder </h1>
+                <div id="roleHolder">
+                    <p id="displayName"></p>
+                    <p id="displayAlignment"></p>
+                    <p id="displayDesc"></p>
+                    <p id="meta"></p>
+                </div>
+                <button id="revealRole"> Otkrij ulogu </button>
+                <p id="warning"> Kliknite na dugme da sakrijete svoju ulogu i predajte uređaj sledećem igraču.</p>
+            </div>
+            <button id="back" id="cancel"> Nazad </button>
+        </div>
+        <div id="settingsMenu" class="menu">
+            <div class="ribbon">
+                <div id="filter"></div>
+                <div id="start">
+                    <button id="startButton"> Start </button>
+                </div>
+                <button class="cancel" id="cancel"> Nazad </button>
+            </div>
+            <h2 id="subtitle"> Izaberite uloge koje ce ucestvovati u igri </h2>
+            <div class="cardHolder" id="cardHolder"></div>
+        </div>
+        <div id="managerMenu" class="menu">
+            <div class="ribbon">
+                <div id="start">
+                    <button id="nightButton"> Spavanje </button>
+                </div>
+                <button class="cancel" id="cancelManager"> Cancel </button>
+            </div>
+            <div class="cardHolder" id="playerHolder"></div>
+        </div>
+        <div id="playerInfoMenu" class="menu">
+            <div id="infoRole"></div>
+            <button id="backToManager"> Nazad </button>
+        </div>
+        <div id="nightMenu" class="menu">
+            <p id="wakeUpRole"> Role placeholder</p>
+            <div id="buttonHolder">
+                <button id="action" class="actionButton"></button>
+                <button id="secondAction" class="actionButton"></button>
+            </div>
+        </div>
+        <script type="module" src="/scripts/index.js"></script>
+    </body>
+    <footer>
+        <p>© 2025 Miloš Peškan</p>
+        <meta name="autor" content="Miloš Peškan">
+    </footer>
+</html>
