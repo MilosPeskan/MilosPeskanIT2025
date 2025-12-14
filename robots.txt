@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /.gitattributes
+
+Sitemap: https://milospeskan.github.io/MilosPeskanIT2025/sitemap.xml
