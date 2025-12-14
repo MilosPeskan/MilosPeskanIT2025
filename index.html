@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +20,7 @@
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="resourses/favicon/ms-icon-144x144.png">
         <meta name="theme-color" content="#ffffff">
+        <meta name="author" content="Miloš Peškan">
         <title>Mafia - Besplatni Alat za Vođenje Igre | Online</title>
         <meta name="description" content="Besplatni online alat za naratore društvene igre Mafija. Pratite uloge igrača, noćne akcije, eliminacije i glasanja. Organizujte savršenu partiju sa digitalnim asistentom.">
         <meta name="keywords" content="mafija, društvena igra mafija, mafija online, pomoćnik za mafiju, mafija menadžer, mafija alat, mafija game master, mafija aplikacija, igra mafija pomoćnik, mafija narator, mafija game master, mafija menadžer za naratore, alat za vođenje igre">
@@ -65,12 +66,12 @@
                 <button id="revealRole"> Otkrij ulogu </button>
                 <p id="warning"> Kliknite na dugme da sakrijete svoju ulogu i predajte uređaj sledećem igraču.</p>
             </div>
-            <button id="back" id="cancel"> Nazad </button>
+            <button id="back" class="cancel"> Nazad </button>
         </div>
         <div id="settingsMenu" class="menu">
             <div class="ribbon">
                 <div id="filter"></div>
-                <div id="start">
+                <div class="start">
                     <button id="startButton"> Start </button>
                 </div>
                 <button class="cancel" id="cancel"> Nazad </button>
@@ -80,7 +81,7 @@
         </div>
         <div id="managerMenu" class="menu">
             <div class="ribbon">
-                <div id="start">
+                <div class="start">
                     <button id="nightButton"> Spavanje </button>
                 </div>
                 <button class="cancel" id="cancelManager"> Cancel </button>
@@ -99,9 +100,8 @@
             </div>
         </div>
         <script type="module" src="scripts/index.js"></script>
+        <footer>
+            <p>© 2025 Miloš Peškan</p>
+        </footer>
     </body>
-    <footer>
-        <p>© 2025 Miloš Peškan</p>
-        <meta name="autor" content="Miloš Peškan">
-    </footer>
 </html>
