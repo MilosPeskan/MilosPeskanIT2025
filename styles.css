@@ -1,11 +1,17 @@
 @font-face {
     font-family: "TheGodfather";
     src: url("resourses/fonts/Bondrians.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: "Title";
     src: url("resourses/fonts/Faith\ Collapsing.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 body {
