@@ -131,6 +131,7 @@ footer {
 }
 
 #pravila {
+    position: absolute;
     margin: 1%;
     height: fit-content;
     background-color: #303d43;
@@ -581,5 +582,23 @@ footer {
     }
     .cardHolder {
         grid-template-columns: repeat(2, 1fr); 
+    }
+    #pravila {
+        position: absolute;
+        top: 10%;
+        margin: 1%;
+        height: fit-content;
+        background-color: #303d43;
+        outline: 2px solid rgb(255, 255, 255);
+        border: 2px solid rgb(0, 0, 0);
+        border-radius: 3px;
+        color: #f9f9f9;
+        z-index: 100;
+    }
+
+    .fb-share-button {
+        position: absolute;
+        top: 20%;
+        margin-left: 1%;
     }
 }
