@@ -141,6 +141,12 @@ footer {
     z-index: 100;
 }
 
+.fb-share-button {
+    position: absolute;
+    top: 50%;
+    margin-left: 1%;
+}
+
 #listOfPlayers {
     position: relative;
     padding: 20px;
