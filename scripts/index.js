@@ -26,7 +26,6 @@ const form = document.getElementById("playerInputForm");
 const playerNameInput = document.getElementById("inputName");
 const deskripcija = document.getElementById("deskripcija");
 const playersList = document.getElementById("listOfPlayers");
-const playersListContainer = document.getElementById("playerListDivider");
 const inputButton = document.getElementById("addPlayer");
 const start = document.getElementById("startButton");
 const back = document.getElementById("back");
@@ -73,7 +72,7 @@ const images = [
   'four.png',
   'five.png',
   'six.png'
-]
+];
 
 const imagePath = 'resourses/plates/'
 
@@ -101,19 +100,19 @@ function checkIfNameInList(name){
     }
 
     addNameToList(name);
-};
+}
 
 // poruka da ime vec postoji i cisti input field
 function throwNameExists(name){
     alert("Igrač " + name + " je već dodat u igru, molimo Vas koristite drugo ime!");
 
     playerNameInput.value = "";
-};
+}
 
 // dodaje ui element igraca u listu na designated field
 function addNameToList(name){
     if (players.length === 0){
-      deskripcija.style.display = "none"
+      deskripcija.style.display = "none";
     }
     const li = document.createElement("li");
     li.textContent = name;
@@ -127,7 +126,7 @@ function addNameToList(name){
         const nameToDelete = li.firstChild.textContent.trim();
         removePlayer(deleteButton, nameToDelete);
         if (players.length === 0){
-          deskripcija.style.display = "block"
+          deskripcija.style.display = "block";
         }
     }
     );
@@ -142,7 +141,7 @@ function addNameToList(name){
     if (players.length == 20) {
         inputManager(true);
     }
-};
+}
 
 // vraca random sliku za pozadinu igraca
 function getRandomImage() {
@@ -154,14 +153,14 @@ function getRandomImage() {
 function inputManager(flip){
     playerNameInput.disabled = flip;
     inputButton.disabled = flip;
-};
+}
 
 // funkcija za uklanjanje igraca iz liste
 function removePlayer(item, name) {
     item.parentElement.remove();
     players = players.filter(item => item !== name);
     inputManager(false);
-};
+}
 
 
 // dugme za zapocinjanje igre i logika o ulogama
@@ -169,7 +168,7 @@ start.addEventListener("click", function(e) {
     e.preventDefault();
 
     if (noOfRoles != 0) {
-      window.alert(`Potrebno je dodati još ${noOfRoles} uloga`)
+      window.alert(`Potrebno je dodati još ${noOfRoles} uloga`);
     }
     else {
       selectionMenu.style.display = "flex";
@@ -178,7 +177,6 @@ start.addEventListener("click", function(e) {
       if (rolePool.includes("10")) {
         let filteredPool = rolePool.filter(r => r !== "10");
         metaEgzekutora = players[filteredPool[Math.floor(Math.random() * filteredPool.length)]];
-        console.log(metaEgzekutora)
       }
 
       shuffleArray(players);
@@ -198,7 +196,6 @@ function displayRole(index){
     displayDesc.textContent = roles[index].description;
 
     if (index == 10){
-    console.log(index)
     targetExecution.textContent = `Meta egzekucije: ${metaEgzekutora}`;
   } else{
     targetExecution.textContent = "";
@@ -520,20 +517,6 @@ nightButton.addEventListener("click", () => {
 
 let lastRole;
 
-function debugDataset() {
-  for (let child of playerHolder.children) {
-    console.log(`Element:`, child);
-
-    const data = {};
-    for (let key in child.dataset) {
-      data[key] = child.dataset[key];
-    }
-
-    console.log("Dataset:", data);
-  }
-  console.log("-------------------")
-}
-
 // funkcija za budjenje igraca
 function wakeUp() {
   console.log("pozvan wakeup")
@@ -769,6 +752,7 @@ action.addEventListener("click", () => {
       break;
     case "target":
       selectPlayer("actionPickTarget")
+      break;
     default:
       wakeUp();
       break;
@@ -997,26 +981,27 @@ function roleActionCheck() {
       action.textContent = "Istraži";
       action.dataset.purpose = "najskorijeUbijen";
       break;
-    case 20:
-      let imaMrtvih = false;
-      for (let x of playerHolder.children) {
-        if (hasStatus(x, "dead")) {
-          imaMrtvih = true;
-          break;
+    case 20:{
+        let imaMrtvih = false;
+        for (let x of playerHolder.children) {
+          if (hasStatus(x, "dead")) {
+            imaMrtvih = true;
+            break;
+          }
         }
-      }
-      if (imaMrtvih) {
-        console.log("seti se");
-        action.textContent = "Seti se";
-        action.dataset.purpose = "setiSe";
-        secondAction.style.display = "block";
-        secondAction.textContent = "Preskoči";
-      } else {
-        console.log("sledeci");
-        action.textContent = "Budi sledećeg";
-        action.dataset.purpose = "wakeUpNext";
-      }
-      break;
+        if (imaMrtvih) {
+          console.log("seti se");
+          action.textContent = "Seti se";
+          action.dataset.purpose = "setiSe";
+          secondAction.style.display = "block";
+          secondAction.textContent = "Preskoči";
+        } else {
+          console.log("sledeci");
+          action.textContent = "Budi sledećeg";
+          action.dataset.purpose = "wakeUpNext";
+        }
+        break;
+    }
     default:
       action.textContent = "Budi sledećeg";
       action.dataset.purpose = "nista"
