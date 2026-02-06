@@ -44,16 +44,19 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <div id="fb-root"></div>
-        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v24.0&appId=APP_ID"></script>
         <div id="mainMenu" class="menu">
-            <h1 id="title">Mafija</h1>
-            <div id="inputNameDivider"></div>
-                <form id="playerInputForm">
-                    <input type="text" id="inputName" placeholder="Unesite ime igrača">
-                    <button type="submit" id="addPlayer"> Dodaj </button>
+            <img src="resourses/blood.png" id="blood" alt="">
+            <div id="input-name-divider">
+                <h1 id="title">Mafija</h1>
+                <div id="settings">
+                    <button id="next-button"></button>
+                </div>
+                <form id="player-input-form">
+                    <input type="text" id="input-name" placeholder="Unesite ime igrača">
+                    <button type="submit" id="button-add-player"></button>
                 </form>
-            <div id="playerListDivider">
+            </div>
+            <div id="player-list-divider">
                 <div id="deskripcija">
                     <h3>Čemu služi online mafija alat za naratore</h3>
                     <p>
@@ -64,29 +67,58 @@
                         eliminacije i vodite kompletnu evidenciju igre - sve na jednom mestu. 
                         Bilo da igrašte klasičnu Mafiju ili varijante sa drugačijim ulogama, naš 
                         <strong>game master tool</strong> čini svaku partiju glatkom i organizovanom. 
-                        </p>
+                    </p>
+                    <a href="https://drustvenaigramafija.wordpress.com/" id="wordpress" >Više o igri Mafija</a>
                 </div>
-                <ul id="listOfPlayers"></ul>
+                <ul id="list-of-players"></ul>
             </div>
-            <div id="settings">
-                <button id="settingsButton"> Dalje </button>
-            </div>
-            <div class="fb-share-button" data-href="https://milospeskan.github.io/MilosPeskanIT2025/" data-layout="" data-size=""><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmilospeskan.github.io%2FMilosPeskanIT2025%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-            <a href="https://sr.wikipedia.org/wiki/%D0%9C%D0%B0%D1%84%D0%B8%D1%98%D0%B0_(%D0%B8%D0%B3%D1%80%D0%B0)" id="pravila" >Više o igri Mafija</a>
         </div>
-        <div id="roleSelection" class="menu">
-             <div id="roleSelectionContent">
-                <h1 id="player"> Igrač placeholder </h1>
-                <div id="roleHolder">
-                    <p id="displayName"></p>
-                    <p id="displayAlignment"></p>
-                    <p id="displayDesc"></p>
-                    <p id="meta"></p>
+        <div id="roleSelection" class="menu newspaper-theme">
+            <div class="newspaper-header">
+                <h1 class="newspaper-title">IL MAFIOSO</h1>
+                <div class="newspaper-subtitle">La Famiglia Chronicles</div>
+                <div id="hold-button-holder" class="button-section responsive-desktop">
+                    <p class="button-instruction">✦ Zadrži da otkriješ ulogu ✦</p>
+                    <div id="hold-button">
+                        <button id="reveal-role"></button>
+                        <img src="resourses/handprint.png" id="handprint" alt="">
+                        <div id="progress-meter">
+                            <img src="resourses/red-handprint.png" id="red-handprint"  alt="">
+                        </div>
+                    </div>
                 </div>
-                <button id="revealRole"> Otkrij ulogu </button>
-                <p id="warning"> Kliknite na dugme da sakrijete svoju ulogu i predajte uređaj sledećem igraču.</p>
+                <button id="hide-role" class="newspaper-button responsive-desktop">✦ Sakrij informacije ✦</button>
             </div>
-            <button id="back" class="cancel"> Nazad </button>
+             <div id="role-selection-content" class="newspaper-content">
+                <div class="newspaper-article">
+                    <p id="role-menu-title"></p>
+                    <h2 id="player" class="article-headline">Igrač Placeholder</h2>
+                </div>
+
+                <div class="newspaper-divider"></div>
+                
+                <div id="role-holder" class="role-article">
+                    <div class="role-stamp">CONFIDENTIAL</div>
+                    <p id="display-name" class="role-title"></p>
+                    <p id="display-alignment" class="role-alignment"></p>
+                    <p id="display-desc" class="role-description"></p>
+                    <p id="meta" class="role-meta"></p>
+                </div>
+                <!--
+                <div id="hold-button-holder" class="button-section responsive-phone">
+                    <p class="button-instruction">✦ Zadrži da otkriješ ulogu ✦</p>
+                    <div id="hold-button">
+                        <button id="reveal-role"></button>
+                        <img src="resourses/handprint.png" id="handprint" alt="">
+                        <div id="progress-meter">
+                            <img src="resourses/red-handprint.png" id="red-handprint"  alt="">
+                        </div>
+                    </div>
+                </div>
+                <button id="hide-role" class="newspaper-button responsive-phone">✦ Sakrij informacije ✦</button>
+                -->
+            </div>
+            <button id="back" class="cancel"></button>
         </div>
         <div id="settingsMenu" class="menu">
             <div class="ribbon">
@@ -94,34 +126,65 @@
                 <div class="start">
                     <button id="startButton"> Start </button>
                 </div>
-                <button class="cancel" id="cancel"> Nazad </button>
+                <button class="cancel" id="cancel"></button>
             </div>
             <h2 id="subtitle"> Izaberite uloge koje ce ucestvovati u igri </h2>
             <div class="cardHolder" id="cardHolder"></div>
         </div>
         <div id="managerMenu" class="menu">
             <div class="ribbon">
+                <button id="lynch"></button>
                 <div class="start">
-                    <button id="nightButton"> Spavanje </button>
+                    <button id="night-button"> Spavanje </button>
                 </div>
-                <button class="cancel" id="cancelManager"> Cancel </button>
+                <button class="cancel" id="cancel-manager"></button>
             </div>
-            <div class="cardHolder" id="playerHolder"></div>
+            <div class="cardHolder" id="player-holder"></div>
         </div>
-        <div id="playerInfoMenu" class="menu">
-            <div id="infoRole"></div>
-            <button id="backToManager"> Nazad </button>
+        <div id="playerInfoMenu" class="menu newspaper-theme">
+            <div class="newspaper-content">
+                <div class="newspaper-article">
+                    <p id="info-name" class="article-headline"></p>
+                </div>
+                <div class="newspaper-divider"></div>
+                <div id="info-holder" class="role-article">
+                    <div class="role-stamp">CONFIDENTIAL</div>
+                    <p id="info-role" class="role-title"></p>
+                    <p id="info-alignment" class="role-alignment"></p>
+                    <p id="info-desc" class="role-description"></p>
+                    <p id="info-target" class="role-meta"></p>
+                </div>
+            </div>
+            <button id="back-to-manager"></button>
         </div>
         <div id="nightMenu" class="menu">
-            <p id="wakeUpRole"> Role placeholder</p>
-            <div id="buttonHolder">
-                <button id="action" class="actionButton"></button>
-                <button id="secondAction" class="actionButton"></button>
+            <p id="wake-up-role"> Role placeholder</p>
+            <div id="button-holder">
+                <button id="action" class="action-button"></button>
             </div>
         </div>
-        <script type="module" src="scripts/index.js"></script>
-        <footer>
-            <p>© 2025 Miloš Peškan</p>
-        </footer>
+        <div id="actionMenu" class="menu">
+            <div class="ribbon">
+                <button id="lynch"></button>
+                <div class="start">
+                    <button id="night-button"> Spavanje </button>
+                </div>
+                <button class="cancel" id="cancel-manager"></button>
+            </div>
+            <div class="role-info">
+                <h2 id="role-title"></h2>
+                <p id="role-description"></p>
+            </div>
+            
+            <div id="target-holder" class="target-grid"></div>
+            
+            <div id="action-result" class="result-display"></div>
+            
+            <div class="action-buttons">
+                <button id="skip-action">Preskoči</button>
+                <button id="confirm-action" disabled>Potvrdi akciju</button>
+            </div>
+        </div>
+        <script type="module" src="scripts/main.js"></script>
     </body>
 </html>
