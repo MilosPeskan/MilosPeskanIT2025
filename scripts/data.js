@@ -1,4 +1,4 @@
-export const roles = {
+export const ROLES = {
   1: { 
     role: "Detektiv", 
     alignment: "Selo", 
@@ -54,7 +54,7 @@ export const roles = {
     description: "Želi da ga Selo pogrešno osudi na vešala tokom glasanja." 
   },
   10: { 
-    role: "Egzekutor", 
+    role: "Dželat", 
     alignment: "Neutralno", 
     category: "Haotična", 
     description: "Njegov cilj je da navede Selo da osudi određenog igrača na vešala." 
