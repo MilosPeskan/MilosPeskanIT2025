@@ -1,3 +1,5 @@
+@import "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Playfair+Display:wght@400;700&display=swap";
+
 @font-face {
     font-family: "TheGodfather";
     src: url("resourses/fonts/Bondrians.ttf") format("truetype");
@@ -14,18 +16,62 @@
     font-display: swap;
 }
 
+:root { 
+    --colorDead: #4B4B4B;
+    --colorMafia: #5a1f1b;
+    --colorNeutral: #4a4338;
+    --colorTown: #2b3a3f;
+    --colorMafiaAccent: #a34732;
+    --colorNeutralAccent: #9a8f7a;
+    --colorTownAccent: #6f8f9b;
+    --colorAlt: #4CAF50;
+    --colorCard: #f9f9f9;
+    --colorNonSelectable: #000000ff;
+    --colorDoused: #636819ff;
+    --colorBewitched: #f1327bff;
+
+    --bg-page: #1c1a17;        /* tamni sepia-ugljen */
+    --text-main: #e3dccf;      /* stari papir */
+
+    
+    --input-bg: #2a2622;          /* tamni papir */
+    --input-border: #4a4338;      /* sepia okvir */
+    --input-text: #e3dccf;        /* stari papir */
+    --input-placeholder: #9a8f7a;
+    --input-focus-border: #a34732; /* mafija akcenat */
+    --input-focus-bg: #2f2b27;
+
+    /* BUTTON – neutral */
+    --btn-bg: #3a342e;
+    --btn-text: #e3dccf;
+    --btn-border: #5a5246;
+    --btn-hover-bg: #4a4338;
+    --btn-active-bg: #2f2b27;
+
+    /* BUTTON – primary (mafija vibe) */
+    --btn-primary-bg: #5a1f1b;
+    --btn-primary-hover: #6b2621;
+    --btn-primary-border: #a34732;
+
+    /* BUTTON – secondary (grad vibe) */
+    --btn-secondary-bg: #2b3a3f;
+    --btn-secondary-hover: #344a52;
+    --btn-secondary-border: #6f8f9b;
+}
+
 body {
     max-width: 100vw;
     height: 100vh;
     margin: 0;
     overflow-x: hidden;
+    font-family: "Libre Baskerville";
 }
 
 footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0);
     color: wheat;
 }
 
@@ -34,23 +80,19 @@ footer {
     width: 100%;
     height: 100%;
     display: none;
-    background-color: #202020;
+    background: linear-gradient(180deg, #1b1b1b, #222);
 }
+
+button {
+    cursor: pointer;
+}
+
+/* MAIN MENI */
 
 #mainMenu {
     display: flex;
-    background-color: black;
-    background-image: url("resourses/main_menu_bg.png");
-    background-repeat: no-repeat;
-}
-
-#title {
-    position: absolute;
-    left: 15%;
-    top: -5%;
-    font-size: 12vh;
-    font-family: "Title";
-    color: wheat;
+    background: black;
+    overflow: hidden;
 }
 
 #subtitle {
@@ -60,58 +102,109 @@ footer {
     width: 100%;
 }
 
-#inputNameDivider {
-    position: absolute;
+#blood{
+    position: fixed;
+    width: auto;
+    aspect-ratio: 1-1;
+    max-width: 60vw;
+    top: 0%;
+    right: 0%;
+    pointer-events: none;
+}
+
+#input-name-divider {
+    position: relative !important;
     display: flex;
     width: 40%;
     height: 100%;
-    align-content: center;
-    justify-content: center;
+    background-image: url("resourses/main_menu_sniper.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
 }
 
-#addPlayer {
+#title {
     position: absolute;
-    right: 0;
+    left: 50%;
+    top:-7%;
+    transform: translateX(-50%);
+    z-index: 100;
+    font-size: 12vh;
+    font-family: "Title";
+    color: wheat;
+}
+
+#settings {
+    position: relative;
     top: 0;
-    transform: translate(20%, -10%);
-    background-image: url(resourses/dodaj.png);
-    height: 85px;
-    width: 85px;
+    right: 0;
+    width: 100%;
+    height: 20%;
+}
+
+#next-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    aspect-ratio: 1;
+    background-image: url(resourses/dalje.png);
     background-color: transparent;
     background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+}
+
+
+#button-add-player {
+    position: absolute;
+    right: -20%;
+    top: 50%;
+    transform: translate(0%, -50%);
+    background-image: url("resourses/dodaj.png");
+    height: 200%;
+    aspect-ratio: 10/8;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
     outline: none;
     border: none;
     color:white;
 }
 
-#inputName {
-    background-color: #303d43;
-    outline: 5px solid rgb(255, 255, 255);
-    border: 4px solid rgb(0, 0, 0);
-    border-radius: 25px;
+#input-name {
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
     width: 332px;
     height: 58px;
     text-align: center;
     text-justify:distribute;
     font-size: 150%;
-    color: rgb(184, 171, 171);
+    color: var(--input-text);
     display: block;
+    text-align: justify;
 }
 
-#inputName::placeholder {
-    color: rgb(184, 171, 171);
+#input-name::placeholder {
+    color: var(--input-placeholder);
+    text-align: justify;
 }
 
-#playerInputForm{
+#player-input-form{
     position: absolute;
     bottom: 0;
-    left: 12%;
+    left: 50%;
+    transform: translateX(-50%);
     margin-bottom: 5vh;
     align-items: center;
     justify-items: center;
 }
 
-#playerListDivider{
+#player-list-divider{
     position: absolute;
     display: flex;
     left: 40%;
@@ -131,29 +224,23 @@ footer {
     text-align: center;
 }
 
-#pravila {
+#wordpress {
     position: absolute;
-    margin: 1%;
+    left: 50%;
+    transform: translateX(-50%);
     height: fit-content;
     background-color: #303d43;
-    outline: 2px solid rgb(255, 255, 255);
-    border: 2px solid rgb(0, 0, 0);
+    border: 2px solid var(--btn-bg);
     border-radius: 3px;
-    color: #f9f9f9;
-    z-index: 100;
+    color: var(--btn-text);
+    z-index: 5;
 }
 
-.fb-share-button {
-    position: absolute;
-    top: 50%;
-    margin-left: 1%;
-}
-
-#listOfPlayers {
+#list-of-players {
     position: relative;
     padding: 20px;
     box-sizing: border-box;
-    display: grid;
+    display: none;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
     column-gap: 10px;
@@ -165,7 +252,7 @@ footer {
     height: 100%;
 }
 
-#listOfPlayers li{
+#list-of-players li{
     display: flex;
     position: relative;
     justify-self: center;
@@ -179,10 +266,9 @@ footer {
     width: 100%;
     height: 100%;
     padding: 0.5vh;
-    color: wheat;
 }
 
-#deleteButton {
+.delete-button {
     position: absolute;
     right: 5%;
     top: 50%;
@@ -194,6 +280,8 @@ footer {
     color: rgb(184, 171, 171);
 }
 
+/* ROLE MENI */
+
 .start {
     display: block;
     position: absolute;
@@ -204,20 +292,6 @@ footer {
 }
 
 #startButton {
-    width: 100%;
-    height: 100%;
-    background-image: url(resourses/start.png);
-    background-color: transparent;
-    background-repeat: no-repeat;
-    outline: none;
-    border: none;
-    color:white;
-    background-size: contain;
-    background-position: center;
-    font-size: 150%;
-}
-
-#nightButton {
     width: 100%;
     height: 100%;
     background-image: url(resourses/start.png);
@@ -249,61 +323,546 @@ footer {
     font-size: 90%;
 }
 
-#roleSelectionContent {
+/* ============================================
+   DARK NOVINSKI TEMA - GLOBALNI STILOVI
+   ============================================ */
+
+.newspaper-theme {
+  /* Tamna charcoal pozadina sa plavim tonovima */
+    background: #1a1d23;
+    background-image: 
+        /* Noise tekstura */
+        url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="300"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /%3E%3CfeColorMatrix type="saturate" values="0"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.08"/%3E%3C/svg%3E'),
+        /* Tamni gradient sa plavim tonovima */
+        linear-gradient(135deg, 
+        #0d1117 0%,
+        #1a1d23 25%,
+        #151a24 50%,
+        #1a1d23 75%,
+        #0d1117 100%
+        );
+    
+    font-family: 'Times New Roman', 'Georgia', serif;
+    color: #d4d0c8;
+    
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Tamna papir tekstura efekat */
+.newspaper-theme::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: #202020;
-    align-items: center;
+    background: 
+        /* Vertikalne linije */
+        repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,0.02) 2px,
+        rgba(255,255,255,0.02) 4px
+        );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.newspaper-theme > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* ============================================
+   NOVINSKI HEADER - DARK
+   ============================================ */
+
+.newspaper-header {
+    text-align: center;
+    padding: 10px 20px 10px;
+    border-bottom: 4px double #8b7355;
+    margin-bottom: 30px;
+    background: linear-gradient(to bottom, 
+        rgba(13, 17, 23, 0.9), 
+        rgba(26, 29, 35, 0.95)
+    );
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+
+.newspaper-title {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    font-size: 4em;
+    font-weight: 900;
+    letter-spacing: 8px;
+    line-height: 1em;
+    margin: 10px 0;
+    background-clip: text;
+    
+    /* Sijanje */
+    filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
+    
+    text-shadow: 
+        0 0 10px rgba(212, 175, 55, 0.5),
+        0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.newspaper-subtitle {
+    font-size: 1.1em;
+    font-style: italic;
+    letter-spacing: 3px;
+    color: #a89880;
+    border-top: 1px solid #8b7355;
+    border-bottom: 1px solid #8b7355;
+    padding: 8px 0;
+    margin-top: 15px;
+    text-shadow: 0 2px 10px rgba(168, 152, 128, 0.4);
+}
+
+/* ============================================
+   GLAVNI SADRŽAJ - DARK
+   ============================================ */
+
+#role-selection-content, .newspaper-content {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    background: transparent;
+    
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    gap: 30px;
+    align-items: start;
     justify-items: center;
 }
 
-#player {
-    font-family: "TheGodFather";
-    font-size: 5em;
-    color: wheat;
+/* ============================================
+   IME IGRAČA - DARK NASLOV
+   ============================================ */
+
+.newspaper-article {
+    justify-items: center;
+    text-align: center;
+    width: 100%;
 }
 
-#revealRole {
+#role-menu-title{
+    width: 80%;
+    text-align: center;
+    border-bottom: 2px solid #5a5246;
+    border-top: 2px solid #5a5246;
+    padding: 10px 0px;
+}
+
+.article-headline {
+    position: relative;
+    font-family: "TheGodFather", 'Georgia', serif;
+    font-size: 3.5em;
+    font-weight: 700;
+    color: #e8dcc8;
+    margin: 20px 0;
+    line-height: 1.2;
+    letter-spacing: 2px;
+    min-width: 40%;
+    border-left: 2px solid #5a5246;
+    border-right: 2px solid #5a5246;
+  
+  /* Zlatni outline efekat */
+  text-shadow: 
+    0 0 5px rgba(212, 175, 55, 0.3),
+    0 0 10px rgba(212, 175, 55, 0.2),
+    2px 2px 0px rgba(139, 115, 85, 0.3),
+    -1px -1px 0px rgba(139, 115, 85, 0.2);
+}
+
+.article-headline::after{
+    content: "";
     position: absolute;
-    background-image: url(resourses/otkrij.png);
-    color: wheat;
-    left: 50%;
-    width: 375px;
-    height: 77px;
-    transform: translateX(-50%); 
-    bottom: 30vh;
+    left: 0;
+    bottom: -10px;
+
+    width: 100%;
+    height: 24px;
+
+    background-image: url("resourses/border-bottom.svg");
+    background-repeat: repeat-x;
+    background-position: bottom;
+    background-size: auto 100%;
+
+    pointer-events: none;
+}
+
+/* ============================================
+   DIVIDER - DARK
+   ============================================ */
+
+.newspaper-divider {
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #8b7355 20%,
+    #8b7355 80%,
+    transparent
+  );
+  box-shadow: 0 0 10px rgba(139, 115, 85, 0.5);
+}
+
+/* ============================================
+   ROLE INFO - DARK POVERLJIV ČLANAK
+   ============================================ */
+
+#role-holder{
+    width: 100%;
+    max-width: 700px;
+    padding: 40px;
+    
+    /* Tamna pozadina sa gradientom */
+    background: linear-gradient(135deg, 
+        #1a1d23 0%,
+        #0f1318 50%,
+        #1a1d23 100%
+    );
+    
+    /* Zlatni/bakarni border */
+    border: 3px double #8b7355;
+    
+    box-shadow: 
+        inset 0 0 30px rgba(0,0,0,0.5),
+        0 5px 20px rgba(0,0,0,0.7),
+        0 0 40px rgba(139, 115, 85, 0.2);
+    
+    position: relative;
+    display: none;
+    text-align: center;
+}
+
+/* CONFIDENTIAL štambilj - crveni */
+.role-stamp {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    
+    font-family: 'Courier New', monospace;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #ff4444;
+    letter-spacing: 3px;
+    
+    border: 3px solid #ff4444;
+    padding: 8px 16px;
+    transform: rotate(15deg);
+    opacity: 0.8;
+    
+    /* Crveno sijanje */
+    box-shadow: 
+        0 0 10px rgba(255, 68, 68, 0.6),
+        inset 0 0 10px rgba(255, 68, 68, 0.2);
+    
+    text-shadow: 0 0 5px rgba(255, 68, 68, 0.8);
+}
+
+.role-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    font-weight: 700;
+    
+    /* Zlatni tekst */
+    background: linear-gradient(180deg, 
+        #f4e4c1 0%,
+        #d4af37 50%,
+        #b8860b 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    
+    margin-bottom: 15px;
+    border-bottom: 2px solid #8b7355;
+    padding-bottom: 10px;
+    
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+.role-alignment {
+    font-size: 1.3em;
+    font-style: italic;
+    color: #a89880;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(168, 152, 128, 0.4);
+}
+
+.role-description {
+    font-size: 1.1em;
+    line-height: 1.8;
+    color: #d4d0c8;
+    text-align: justify;
+    padding: 0 20px;
+    margin-bottom: 15px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
+.role-meta {
+    font-size: 1em;
+    font-weight: bold;
+    color: #ff6b6b;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px dashed #ff4444;
+    background: rgba(255, 68, 68, 0.1);
+    box-shadow: 
+        0 0 10px rgba(255, 68, 68, 0.2),
+        inset 0 0 20px rgba(255, 68, 68, 0.05);
+    text-shadow: 0 0 5px rgba(255, 68, 68, 0.6);
+}
+
+/* ============================================
+   HOLD BUTTON - DARK WAX SEAL
+   ============================================ */
+
+#hold-button-holder {
+    position: relative;
+    justify-items: center;
+}
+
+.button-instruction {
+    font-family: 'Georgia', serif;
+    font-size: 1.2em;
+    font-style: italic;
+    font-weight: bold;
+    color: #a89880;
+    margin-top: 25px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(168, 152, 128, 0.4);
+}
+
+#hold-button{
+    position: relative;
+    height: 47vh;
+    aspect-ratio: 2/3;
+
+    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.8));
+}
+
+#reveal-role {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* Tamni pergament */
+    background-image: url(resourses/hold-button-bg.png);
     background-color: transparent;
     background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    
+    border: none;
+    outline: none;
+    cursor: pointer;
+    overflow: hidden;
+    
+    user-select: none;
+    touch-action: none;
+  
+}
+
+/* Handprint - tamni bazni */
+#handprint {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    pointer-events: none;
+    
+    opacity: 0.7;
+    filter: 
+        brightness(0.4)
+        sepia(0.3)
+        saturate(0.5);
+}
+
+#progress-meter {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    
+    pointer-events: none;
+    overflow: hidden;
+    transition: height 0.05s linear;
+}
+
+/* Crveni handprint - intenzivan sa sijajem */
+#red-handprint {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    pointer-events: none;
+  
+}
+
+#reveal-role.holding {
+    animation: dark-pulse 0.8s ease-in-out infinite;
+    border-color: var(--colorMafia);
+    filter: drop-shadow(0 0 30px rgba(139, 54, 54, 0.6));
+}
+
+@keyframes dark-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+}
+
+/* ============================================
+   BUTTONS - DARK STIL
+   ============================================ */
+
+#hide-role {
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 25%;
+    aspect-ratio: 2 / 1;
+
+    font-family: 'Georgia', serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #e8dcc8;
+
+    background-image: url(resourses/hide-role-button.svg);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
     outline: none;
     border: none;
-    color:white;
-    font-size: 150%;
+    
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform-origin: center;
+
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 
-#warning {
+#hide-role:hover {
+    scale: 1.03;
+}
+
+/* ============================================
+   DODATNI DARK EFEKTI
+   ============================================ */
+
+.newspaper-theme::after {
+    content: '';
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%); 
-    color: wheat;
-    font-size: 1.5em;
-    bottom: 10vh;
-    display: none;
-    text-align: center;
-}
-
-#roleHolder {
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 50%;
-    display: none;
-    justify-items: center;
-    align-content: center;
-    font-size: 1.5em;
-    color: wheat;
-    transform: translateY(-45%);
+    height: 100%;
+    background: 
+        radial-gradient(
+        ellipse at 20% 30%,
+        rgba(26, 29, 35, 0.6) 0%,
+        transparent 50%
+        ),
+        radial-gradient(
+        ellipse at 80% 70%,
+        rgba(15, 19, 24, 0.6) 0%,
+        transparent 50%
+        ),
+        radial-gradient(
+        ellipse at 50% 50%,
+        transparent 0%,
+        rgba(0,0,0,0.2) 100%
+        );
+    pointer-events: none;
+    z-index: 1;
 }
 
-#roleHolder p {
-    text-align: center;
+/* Fade-in animacija za reveal - dark */
+#role-holder.revealed {
+    animation: darkFadeIn 0.8s ease-out;
+}
+
+@keyframes darkFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+        box-shadow: 
+        inset 0 0 30px rgba(0,0,0,0.5),
+        0 5px 20px rgba(0,0,0,0.7),
+        0 0 0px rgba(139, 115, 85, 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        box-shadow: 
+        inset 0 0 30px rgba(0,0,0,0.5),
+        0 5px 20px rgba(0,0,0,0.7),
+        0 0 40px rgba(139, 115, 85, 0.2);
+    }
+}
+
+.responsive-phone{
+    display: none;
+}
+
+/* Ambient light particles (opciono) */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translateY(-20px) translateX(10px);
+        opacity: 0.6;
+    }
+}
+
+/* ============================================
+   RESPONSIVE - DARK
+   ============================================ */
+
+@media (max-width: 768px) {
+    .newspaper-title {
+        font-size: 2.5em;
+        letter-spacing: 4px;
+    }
+    
+    #player {
+        font-size: 2.5em;
+    }
+
+    .responsive-phone{
+        display: block;
+    }
+
+    .responsive-desktop{
+        display: none;
+    }
+  
+    #role-selection-content {
+        padding: 30px 20px;
+    }
+    
+    #role-holder {
+        padding: 30px 20px;
+    }
+    
+    .wax-seal-container {
+        height: 35vh;
+    }
 }
 
 .cardHolder {
@@ -316,47 +875,53 @@ footer {
     box-sizing: border-box;
 }
 
-#settings {
-    position: absolute;
-    top:20%;
-    left: 18%;
-    transform: translate(-10%, 20%); 
-    width: 143px;
-    height: 152px;
-}
-
-#settingsButton {
-    width: 100%;
-    height: 100%;
-    background-image: url(resourses/dalje.png);
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    outline: none;
-    border: none;
-    color: white;
-    font-size: 1.5em;
-}
+/* ROLE MENI */
 
 #settingsMenu {
     height: auto;
-    background-color: #202020;
 }
 
 .card {
-  border: 1px solid #302c2c;
-  border-radius: 10px;
-  padding: 12px;
-  background: #f9f9f9;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  flex-direction: column;
+    position: relative;
+    border: 1px solid #302c2c;
+    border-radius: 14px;
+    padding: 12px;
+    background: #f9f9f9;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("resourses/paper.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.4;
+    border-radius: inherit;
+    mix-blend-mode: multiply;
+    pointer-events: none;
 }
 
 .card h3 {
     font-size: 1.2em;
+}
+
+[data-alignment="Selo"]{
+    background-color: var(--colorTown);
+}
+
+[data-alignment="Mafija"]{
+    background-color: var(--colorMafia);
+}
+
+[data-alignment="Neutralno"]{
+    background-color: var(--colorNeutral);
 }
 
 .infoCard {
@@ -370,35 +935,71 @@ footer {
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.roleName {
-  margin: 0 0 8px 0;
-  font-weight: bold;
+.role-name {
+    font-family: 'Playfair Display', serif;
+    color: var(--text-main);
+    margin: 0 0 8px 0;
+    font-weight: bold;
 }
 
-.roleAlignment {
-  color: #202020;
-  font-style: italic;
+.role-alignment {
+    font-style: italic;
 }
 
-.roleCategory {
-  color: #414040;
+.card[data-alignment="Selo"] .role-alignment{
+    color: var(--colorTownAccent);
 }
 
-.roleDescription {
-  margin-top: 6px;
+.card[data-alignment="Mafija"] .role-alignment{
+    color: var(--colorMafiaAccent);
 }
 
-.numberDiv {
+.card[data-alignment="Neutralno"] .role-alignment{
+    color: var(--colorNeutralAccent);
+}
+
+.role-category {
+    color: #817b7b;
+}
+
+.role-description {
+    margin-top: 6px;
+}
+
+.number-div {
     display: grid;
     grid-template-columns: repeat(3, 1fr); 
     gap: 16px;
     align-items: center;
     left: 50%;
     margin-top: auto;
+}
+
+.remove-role {
+    background-image: url("resourses/ui/arrow.png");
+    transform: scale(-1, -1);
+    aspect-ratio: 1;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    background-size: contain;
+    background-position: center;
+}
+
+.add-role {
+    background-image: url("resourses/ui/arrow.png");
+    aspect-ratio: 1;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    background-size: contain;
+    background-position: center;
 }
 
 .counter {
@@ -434,11 +1035,165 @@ footer {
     font-size: 90%;
 }
 
-#playerHolder {
-    max-height: 2em;
+/* GAME MENI*/
+
+#managerMenu {
+    height: 100%;
+    align-items: start;
+    grid-template-rows: auto 1fr;
 }
 
-#wakeUpRole {
+#managerMenu .ribbon{
+    height: 15vh;
+}
+
+#night-button {
+    width: 100%;
+    height: 100%;
+    background-image: url(resourses/start.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    color:white;
+    background-size: contain;
+    background-position: center;
+    font-size: 150%;
+}
+
+#player-holder {
+    position: relative;
+    display: grid;
+    align-self: start;
+    width: 100%;
+    height: fit-content;
+    grid-column-gap: 15px;
+    grid-row-gap: 15px;
+}
+
+.player-card{
+    position: relative;
+    min-width: 0;
+    cursor: pointer;
+}
+
+.player-icon{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.nametag{
+    position: absolute;
+    width: 80%;
+    height: 20%;
+    bottom: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    align-content: center;
+    border-left: 2px solid #5a5246;
+    border-right: 2px solid #5a5246;
+    border-top: 2px solid #5a5246;
+    background-color: #1a1d23;
+    color: #d4af37;
+    pointer-events: none;
+}
+
+.nametag::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+
+    width: 100%;
+    height: 24px;
+
+    background-image: url("resourses/nametag-border.svg");
+    background-repeat: repeat-x;
+    background-position: bottom;
+    background-size: auto 100%;
+
+    transform: translateY(50%);
+
+    pointer-events: none;
+}
+
+#lynch{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    aspect-ratio: 1;
+}
+
+.skull{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    aspect-ratio: 1;
+}
+
+.player-card[data-alive= false] {
+    background-color: #ff0000;
+}
+
+.player-card[data-alive= "true"] {
+    background-color: #ff0000;
+}
+
+/* INFO MENI */
+
+#back-to-manager {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 20vh;
+    aspect-ratio: 1;
+    margin: 1.5vw;
+    background-image: url("resourses/back.png");
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    background-size: contain;
+    background-position: center;
+    font-size: 150%;
+}
+
+#info-holder{
+    width: 100%;
+    max-width: 700px;
+    padding: 40px;
+    
+    /* Tamna pozadina sa gradientom */
+    background: linear-gradient(135deg, 
+        #1a1d23 0%,
+        #0f1318 50%,
+        #1a1d23 100%
+    );
+    
+    /* Zlatni/bakarni border */
+    border: 3px double #8b7355;
+    
+    box-shadow: 
+        inset 0 0 30px rgba(0,0,0,0.5),
+        0 5px 20px rgba(0,0,0,0.7),
+        0 0 40px rgba(139, 115, 85, 0.2);
+    
+    position: relative;
+    display: block;
+    text-align: center;
+}
+
+
+
+/* NIGHT MENI */
+
+#wake-up-role {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -453,49 +1208,7 @@ footer {
     display: none;
 }
 
-#infoRole {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    align-content: center;
-    justify-items: center;
-    color: wheat;
-    font-size: 1.5em;
-}
-
-#infoRole p {
-    text-align: center;
-}
-
-#infoRole h3 {
-    font-family: "TheGodfather";
-    font-size: 4em;
-    line-height: 0.2em;
-}
-
-#backToManager {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 20vh;
-    aspect-ratio: 1;
-    margin: 1.5vw;
-    background-image: url(resourses/back.png);
-    background-color: transparent;
-    background-repeat: no-repeat;
-    outline: none;
-    border: none;
-    color:white;
-    background-size: contain;
-    background-position: center;
-    font-size: 150%;
-}
-
-.card[data-status="dead"] {
-    background-color: #ff0000;
-}
-
-#buttonHolder{
+#button-holder{
     position: absolute;
     width: 50vh;
     height: 20vh;
@@ -510,7 +1223,7 @@ footer {
     margin-bottom: 1.5vh;
 }
 
-.actionButton{
+.action-button{
     font-size: 1.5em;
     background-image: url(resourses/otkrij.png);
     color: wheat;
@@ -523,30 +1236,8 @@ footer {
     color:white;
 }
 
-#secondAction{
+#second-action{
     display: none;
-}
-
-.removeRole {
-    background-image: url(resourses/arrow.png);
-    transform: scale(-1, -1);
-    aspect-ratio: 1;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    outline: none;
-    border: none;
-    background-size: contain;
-    background-position: center;
-}
-.addRole {
-    background-image: url(resourses/arrow.png);
-    aspect-ratio: 1;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    outline: none;
-    border: none;
-    background-size: contain;
-    background-position: center;
 }
 
 @media (max-width: 767px) {
@@ -595,11 +1286,5 @@ footer {
         border-radius: 3px;
         color: #f9f9f9;
         z-index: 100;
-    }
-
-    .fb-share-button {
-        position: absolute;
-        top: 20%;
-        margin-left: 1%;
     }
 }
