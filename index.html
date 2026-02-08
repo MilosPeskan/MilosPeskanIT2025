@@ -131,15 +131,19 @@
             <h2 id="subtitle"> Izaberite uloge koje ce ucestvovati u igri </h2>
             <div class="cardHolder" id="cardHolder"></div>
         </div>
-        <div id="managerMenu" class="menu">
-            <div class="ribbon">
+        <div id="managerMenu" class="menu player-display-menu">
+            <div id="popup">
+                <div id="popup-text"> Placeholder </div>
+                <button id="popup-button"></button>
+            </div>
+            <div class="ribbon player-menu-ribbon">
                 <button id="lynch"></button>
                 <div class="start">
                     <button id="night-button"> Spavanje </button>
                 </div>
                 <button class="cancel" id="cancel-manager"></button>
             </div>
-            <div class="cardHolder" id="player-holder"></div>
+            <div class="player-card-holder" id="player-holder"></div>
         </div>
         <div id="playerInfoMenu" class="menu newspaper-theme">
             <div class="newspaper-content">
@@ -163,8 +167,16 @@
                 <button id="action" class="action-button"></button>
             </div>
         </div>
-        <div id="actionMenu" class="menu">
-            <div class="ribbon">
+        <div id="lynchMenu" class="menu player-display-menu">
+            <div class="ribbon player-menu-ribbon">
+                <button id="confirm-lynch"></button>
+                <span id="votes-per-players"></span>
+                <button class="cancel" id="cancel-lynch"></button>
+            </div>
+            <div class="player-card-holder" id="lynch-holder"></div>
+        </div>
+        <div id="actionMenu" class="menu player-display-menu">
+            <div class="ribbon player-menu-ribbon">
                 <button id="lynch"></button>
                 <div class="start">
                     <button id="night-button"> Spavanje </button>
