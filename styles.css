@@ -83,6 +83,26 @@ footer {
     background: linear-gradient(180deg, #1b1b1b, #222);
 }
 
+.player-display-menu{
+    height: 100%;
+    align-items: start;
+    grid-template-rows: auto 1fr;
+}
+
+.ribbon {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10vh;
+    z-index: 10;
+    background-color: black;
+}
+
+.player-menu-ribbon{
+    height: 15vh;
+}
+
 button {
     cursor: pointer;
 }
@@ -1008,16 +1028,6 @@ button {
     font-size: 150%;
 }
 
-.ribbon {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 10vh;
-    z-index: 10;
-    background-color: black;
-}
-
 .cancel {
     position: absolute;
     right: 0;
@@ -1036,15 +1046,46 @@ button {
 }
 
 /* GAME MENI*/
+#popup{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 80%;
+    height: 80%;
+    z-index: 100;
 
-#managerMenu {
-    height: 100%;
-    align-items: start;
-    grid-template-rows: auto 1fr;
+    background: linear-gradient(135deg, 
+        #1a1d23 0%,
+        #0f1318 50%,
+        #1a1d23 100%
+    );
+    
+    /* Zlatni/bakarni border */
+    border: 3px double #8b7355;
+    
+    box-shadow: 
+        inset 0 0 30px rgba(0,0,0,0.5),
+        0 5px 20px rgba(0,0,0,0.7),
+        0 0 40px rgba(139, 115, 85, 0.2);
+
+    text-align: center;
 }
 
-#managerMenu .ribbon{
-    height: 15vh;
+#popup-text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-main);
+}
+
+#popup-button{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 #night-button {
@@ -1061,10 +1102,10 @@ button {
     font-size: 150%;
 }
 
-#player-holder {
+.player-card-holder {
     position: relative;
     display: grid;
-    align-self: start;
+    padding-top: 5vh;
     width: 100%;
     height: fit-content;
     grid-column-gap: 15px;
@@ -1133,6 +1174,10 @@ button {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    background-image: url("resourses/skull.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 60%;
     aspect-ratio: 1;
 }
@@ -1238,6 +1283,87 @@ button {
 
 #second-action{
     display: none;
+}
+
+/* LYNCH MENI */
+
+.controls-div{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 20%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 16px;
+    align-items: center;
+    margin-top: auto;
+    border-left: 2px solid #5a5246;
+    border-right: 2px solid #5a5246;
+    border-bottom: 2px solid #5a5246;
+    background-color: #1a1d23;
+    color: #d4af37;
+}
+
+.controls-div::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -24px;
+
+    width: 100%;
+    height: 24px;
+
+    background-image: url("resourses/nametag-border.svg");
+    background-repeat: repeat-x;
+    background-position: top;
+    background-size: auto 100%;
+
+    transform: scale(-1, -1);
+
+    pointer-events: none;
+}
+
+#confirm-lynch{
+    height: 100%;
+    aspect-ratio: 1;
+}
+
+#votes-per-players{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    justify-self: center;
+    color: var(--text-main);
+}
+
+.votes {
+    justify-self: center;
+}
+
+.remove-vote {
+    background-image: url("resourses/ui/arrow.png");
+    transform: scale(-1, -1);
+    aspect-ratio: 1;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    background-size: contain;
+    background-position: center;
+}
+
+.add-vote {
+    background-image: url("resourses/ui/arrow.png");
+    aspect-ratio: 1;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    background-size: contain;
+    background-position: center;
 }
 
 @media (max-width: 767px) {
