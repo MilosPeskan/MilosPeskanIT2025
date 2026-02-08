@@ -4,12 +4,48 @@ export const CONFIG = {
   MAX_NAME_LENGTH: 20
 }
 
+export const ROLE_IDS = {
+  DETEKTIV: 1,
+  DOKTOR: 2,
+  SELJAK: 3,
+  MAFIJAS: 4,
+  KUM: 5,
+  SAVETNIK: 6,
+  PRATILAC: 7,
+  SERIJSKI_UBICA: 8,
+  LUDAK: 9,
+  DZELAT: 10,
+  VESTICA: 11,
+  PIROMAN: 12,
+  TELOHRANITELJ: 13,
+  SERIF: 14,
+  SPIJUN: 15,
+  TRAGAC: 16,
+  MEDIUM: 17,
+  ESKORT: 18,
+  POGREBNIK: 19,
+  AMNEZICAR: 20
+}
+
 export const MESSAGES = {
   EMPTY_NAME: "Molimo unesite ime igrača!",
   NAME_EXISTS: (name) => `Igrač ${name} je već dodat u igru. Koristite drugo ime!`,
   NAME_TOO_LONG: (max) => `Ime ne može biti duže od ${max} karaktera!`,
   MAX_PLAYERS_REACHED: (max) => `Dostignut maksimum od ${max} igrača!`
 };
+
+export const LYNCH_MESSAGE = {
+  NO_VOTES: "Niko nije glasao, glasanje se preskače.",
+  LYNCHED: (name, votes) => `Sa ukupno ${votes} glasova, izlasan je igrač ${name}.`,
+  TIE: (votes, names, last) => `Niko nije izglasan, ukupno ${votes} glasova imaju ${names} i ${last}.`,
+  JESTER: (votes, name) => `Sa ukupno ${votes} glasova, izlasan je igrač ${name}. \n Igrač ${name} je bio ludak, ludak je pobedio!`,
+  EXECUTIONER: (votes, name, executioner) => `Sa ukupno ${votes} glasova, izlasan je igrač ${name}. \n Igrač ${name} je bio meta dželata ${executioner}, dželat je pobedio!`,
+}
+
+export const WIN_MESSAGE = {
+  TOWN_WIN: `Pobedio je grad!`,
+  MAFIA_WIN: `Mafija je pobedila!`
+}
 
 export const UI_TEXT = {
   NARRATOR: "Narator",
@@ -43,6 +79,7 @@ export const COLOR = {
 }
 
 export const ROLE_REVEAL_TIMER = 2500; //2.5 sekundi
+export const DISCUSSION_TIMER = 300; // 5 minuta
 
 export const PLAYER_ICONS = [
   "silueta1.png",
@@ -67,13 +104,6 @@ export const PLAYER_ICONS = [
   "silueta20.png"
 ]
 
-export const WIN_MESSAGE ={
-  TOWN_WINS: "Pobedio je grad!",
-  MAFIA_WINS: "Pobedila je mafija!"
-}
-
 export const ICON_PATH = "../../resourses/silluetes/";
-
-export const EXECUTIONER_ID = 10;
 
 export const ORDER_OF_ROLES = [20, 11, 18, 7, 1, 14, 6, 19, 17, 2, 13, 4, 15, 8, 12, 16];
