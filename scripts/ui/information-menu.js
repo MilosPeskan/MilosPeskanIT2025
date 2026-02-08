@@ -1,4 +1,4 @@
-import { EXECUTIONER_ID } from "../constants.js";
+import { ROLE_IDS } from "../constants.js";
 import { UiController } from "./ui-controller.js";
 
 export class InfoMenu extends UiController{
@@ -24,7 +24,6 @@ export class InfoMenu extends UiController{
 
     attachEventListeners(){
         this.addEventListener(this.elements.backButton, "click", ()=>{
-            console.log("ovde uslo");
             this.onBackClicked?.();
         })
     }
@@ -32,7 +31,7 @@ export class InfoMenu extends UiController{
     displayInfo(player){
         this.displaySearched(player);
 
-        if(player.roleId == EXECUTIONER_ID){
+        if(player.roleId == ROLE_IDS.DZELAT){
             this.elements.target.style.display = "block";
             this.elements.target.textContent = `Tvoja meta je: ${this.gameState.getExecutionTarget()}`;
         }
