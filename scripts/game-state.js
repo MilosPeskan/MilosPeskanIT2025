@@ -1,4 +1,4 @@
-import { CONFIG, EXECUTIONER_ID, MESSAGES, ORDER_OF_ROLES } from './constants.js';
+import { CONFIG, LYNCH_MESSAGE, MESSAGES, ORDER_OF_ROLES, ROLE_IDS, WIN_MESSAGE } from './constants.js';
 import { PlayerClass } from './player-manager.js';
 import { IconManager } from './utils/icon-manager.js';
 
@@ -7,10 +7,12 @@ export class GameState{
         this.playerObjects = []; //lista PlayerClass objekata
         this.players = []; //string player name
         this.roles = [];  //int index uloge
-        this.nightOrder = [];
+        this.nightOrder = []; //redosled id od uloga za budjenje 
+        this.lynchVotes = 0;
         this.currentPlayerIndex = 0;
         this.iconManager = new IconManager;
         this.executionTarget = null;
+        this.executionerPlayer = null;
     }
 
     //funkcija za dodavanje igraca
@@ -39,6 +41,9 @@ export class GameState{
         const index = this.players.indexOf(name);
         if (index > -1) {
             this.players.splice(index, 1);
+        }
+        if(this.roles.length > 0){
+            this.roles.pop();
         }
     }
 
@@ -96,16 +101,22 @@ export class GameState{
     }
 
     isExecutioner(){
-        return this.getCurrentRole() == EXECUTIONER_ID;
+        return this.getCurrentRole() == ROLE_IDS.DZELAT;
     }
 
     getExecutionTarget(){
-        return this.executionTarget;
+        return this.executionTarget.name;
     }
 
     generateExecutionTarget(){
-        const filterExecutioner = this.players.filter((_, index) => this.roles[index] != EXECUTIONER_ID)
+        const filterExecutioner = this.playerObjects.filter((_, index) => this.roles[index] != ROLE_IDS.DZELAT)
         this.executionTarget = filterExecutioner[Math.floor((Math.random()*filterExecutioner.length))];
+    }
+
+    getExecutioner(){
+        for(const player of this.playerObjects){
+
+        }
     }
 
     resetPlayerIndex(){
@@ -120,7 +131,6 @@ export class GameState{
 
         this.createPlayerObjects(icons);
         this.nightOrder = this.generateNightOrder(this.playerObjects);
-        console.log(this.nightOrder);
     }
 
     createPlayerObjects(icons){
@@ -157,14 +167,65 @@ export class GameState{
     }
 
     getAlivePlayers() {
-    return this.players.filter(p => p.isAlive);
-  }
+        return this.playerObjects.filter(p => p.isAlive);
+    }
 
-  /**
-   * Dobavi sve mrtve igrače
-   */
+    /**
+    * Dobavi sve mrtve igrače
+    */
     getDeadPlayers() {
         return this.playerObjects.filter(p => !p.isAlive);
+    }
+
+    getNumberOfAlivePlayers(){
+        return this.getAlivePlayers().length;
+    }
+
+    getLynchVotes(){
+        return this.lynchVotes;
+    }
+
+    addLynchVote(player){
+        const maxVotes = this.getNumberOfAlivePlayers();
+
+        if(this.lynchVotes < maxVotes){
+            player.addLynchVote();
+            this.lynchVotes++;
+        }
+    }
+
+    removeLynchVote(player){
+        if(player.votes > 0){
+            player.removeLynchVote();
+            this.lynchVotes--;
+        }
+    }
+
+    resetLynch(){
+        this.lynchVotes = 0;
+        for(const player of this.getAlivePlayers()){
+            player.resetVotes();
+        }
+    }
+
+    handleLynch(){
+        const alivePlayers = this.getAlivePlayers();
+        const maxVote = Math.max(...alivePlayers.map(p => p.getLynchVotes()))
+
+        if(maxVote === 0){
+            return LYNCH_MESSAGE.NO_VOTES;
+        }
+
+        const topVoted = alivePlayers.filter(p => p.getLynchVotes() === maxVote);
+        const listOfNames = topVoted.map(p => p.name);
+
+        this.resetLynch();
+
+        if(topVoted.length > 1) return LYNCH_MESSAGE.TIE(maxVote, listOfNames.slice(0, -1), listOfNames.at(-1));
+        else{
+            topVoted[0].kill();
+            return this.checkLynchWinCondition(topVoted[0], maxVote);
+        }
     }
 
     /**
@@ -184,9 +245,33 @@ export class GameState{
         const mafia = alive.filter(p => p.isAlignment('Mafija'));
         const town = alive.filter(p => p.isAlignment('Selo'));
         
-        if (mafia.length === 0) return 'TOWN_WINS';
-        if (mafia.length >= town.length || mafia.length === town.length && alive.length === 2) return 'MAFIA_WINS';
+        if (mafia.length === 0) return this.townWin();
+        if (mafia.length >= town.length || mafia.length === town.length && alive.length === 2) return this.mafiaWin();
         
         return null; // Igra se nastavlja
+    }
+
+    checkLynchWinCondition(player, votes){
+        if(player.roleId == ROLE_IDS.LUDAK) return this.jesterWin(player, votes);
+        if(player === this.executionTarget) return this.executionerWin(player, votes);
+        if(this.checkWinCondition()) return LYNCH_MESSAGE.LYNCHED(player.name, votes) + `\n` + this.checkWinCondition();
+        return LYNCH_MESSAGE.LYNCHED(player.name, votes);
+    }
+
+    townWin(){
+        return WIN_MESSAGE.TOWN_WIN;
+    }
+
+    mafiaWin(){
+        return WIN_MESSAGE.MAFIA_WIN;
+    }
+
+    jesterWin(player, votes){
+        return LYNCH_MESSAGE.JESTER(votes, player.name)
+    }
+
+    executionerWin(player, votes){
+
+        return LYNCH_MESSAGE.EXECUTIONER(votes, player.name, )
     }
 }
