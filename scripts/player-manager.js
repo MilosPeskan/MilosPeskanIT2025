@@ -1,7 +1,9 @@
 import { ROLES } from "./data.js";
 
 export class PlayerClass{
+    static nextId = 1;
     constructor(name, roleId, iconPath = null){
+        this.id = PlayerClass.nextId++;
         this.name = name;
         this.roleId = roleId;
         this.iconPath = iconPath;
@@ -9,6 +11,7 @@ export class PlayerClass{
         this.isAlive = true;
         this.statuses = new Set();
         this.visitedBy = [];
+        this.votes = 0;
     }
 
     checkIfPlayerAlive(){
@@ -31,6 +34,10 @@ export class PlayerClass{
         return this.getRoleData().description;
     }
 
+    isAlignment(alignment){
+        return this.getRoleAlignment() == alignment;
+    }
+
     hasStatus(status){
         return this.statuses.has(status);
     }
@@ -45,6 +52,22 @@ export class PlayerClass{
 
     clearStatuses(){
         this.statuses.clear();
+    }
+
+    addLynchVote(){
+        this.votes++;
+    }
+
+    removeLynchVote(){
+        this.votes--;
+    }
+
+    getLynchVotes(){
+        return this.votes;
+    }
+
+    resetVotes(){
+        this.votes = 0;
     }
 
     kill(){
