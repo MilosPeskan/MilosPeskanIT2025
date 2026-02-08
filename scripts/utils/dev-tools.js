@@ -52,5 +52,11 @@ export function setupDevTools(game, ui) {
         skipToGame
     };
 
+    document.addEventListener("keydown", e =>{
+        if(e.ctrlKey && e.key === "g") {
+            skipToGame();
+        }
+    })
+
     console.log("🔥 Dev tools ready: type 'debug' in console");
 }
