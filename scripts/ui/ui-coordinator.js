@@ -1,6 +1,7 @@
 import { ActionMenu } from "./action-menu.js";
 import { GameMenu } from "./game-menu-ui.js";
 import { InfoMenu } from "./information-menu.js";
+import { LynchMenu } from "./lynch-menu-ui.js";
 import { MainMenu } from "./main-menu-ui.js";
 import { NightMenu } from "./night-menu-ui.js";
 import { RoleMenu } from "./role-menu-ui.js";
@@ -49,6 +50,11 @@ export class UiCoordinator{
             this.gameState
         );
 
+        this.lynchMenu = new LynchMenu(
+            document.getElementById("lynchMenu"),
+            this.gameState
+        );
+
         this.hideAll();
         this.mainMenu.show("flex");
     }
@@ -75,7 +81,7 @@ export class UiCoordinator{
         };
 
         this.roleMenu.onBackClick = () => {
-            this.backToMainMenu(this.mainMenu);
+            this.backToMainMenu(this.roleMenu);
         };
 
         this.revealMenu.onRevealComplete = () => {
@@ -107,6 +113,19 @@ export class UiCoordinator{
         this.nightMenu.onActionClicked = (action) => {
             this.transitionTo(this.nightMenu, this.actionMenu, "grid");
         };
+
+        this.gameMenu.onLynchClicked = () => {
+            this.transitionTo(this.gameMenu, this.lynchMenu, "grid");
+        }
+
+        this.lynchMenu.onCancelClicked = () => {
+            this.transitionTo(this.lynchMenu, this.gameMenu, "grid");
+        }
+
+        this.lynchMenu.onLynchClicked = () => {
+            this.transitionTo(this.lynchMenu, this.gameMenu, "grid");
+            this.gameMenu.lynchPopup();
+        }
     }
 
     transitionTo(fromController, toController, type){
@@ -125,6 +144,7 @@ export class UiCoordinator{
         this.gameMenu.hide();
         this.infoMenu.hide();
         this.nightMenu.hide();
+        this.lynchMenu.hide();
     }
 
     cleanup(){
@@ -134,5 +154,6 @@ export class UiCoordinator{
         this.gameMenu.cleanup();
         this.infoMenu.cleanup();
         this.nightMenu.cleanup();
+        this.lynchMenu.cleanup();
     }
 }
