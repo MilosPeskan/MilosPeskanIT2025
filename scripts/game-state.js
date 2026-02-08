@@ -4,9 +4,8 @@ import { IconManager } from './utils/icon-manager.js';
 
 export class GameState{
     constructor() {
-        this.playerObjects = []; //lista PlayerClass objekata
-        this.players = []; //string player name
-        this.roles = [];  //int index uloge
+        this.players = []; //lista PlayerClass objekata
+        this.pendingRoles = [];  //int index uloge
         this.nightOrder = []; //redosled id od uloga za budjenje 
         this.lynchVotes = 0;
         this.currentPlayerIndex = 0;
@@ -17,33 +16,53 @@ export class GameState{
 
     //funkcija za dodavanje igraca
     addPlayer(name){
-        if(!name){
+        const sanitizedName = this.sanitizeName(name);
+
+        if(!sanitizedName){
             throw new Error(MESSAGES.EMPTY_NAME);
         }
 
-        if(name.length > CONFIG.MAX_NAME_LENGTH){
+        if(sanitizedName.length > CONFIG.MAX_NAME_LENGTH){
             throw new Error(MESSAGES.NAME_TOO_LONG(CONFIG.MAX_NAME_LENGTH));
         }
 
-        if(this.players.includes(name)){
-            throw new Error(MESSAGES.NAME_EXISTS(name));
+        if(this.players.some(p => p.name === sanitizedName)){
+            throw new Error(MESSAGES.NAME_EXISTS(sanitizedName));
         }
 
         if(this.players.length >= CONFIG.MAX_PLAYERS) {
             throw new Error(MESSAGES.MAX_PLAYERS_REACHED(CONFIG.MAX_PLAYERS));
         }
 
-        this.players.push(name);
+        this.players.push(new PlayerClass(sanitizedName, null, null));
     }
+
+    sanitizeName(name) {
+        if (!name) return '';
+        
+        // Ukloni specijalne karaktere, zadrži slova (uključujući naša slova), brojeve i razmake
+        let sanitized = name
+            .trim()
+            .replace(/[^a-zA-ZčćžšđČĆŽŠĐ0-9\s]/g, '')
+            .replace(/\s+/g, ' '); // Zameni više razmaka sa jednim
+        
+        // Prvo slovo veliko, ostala mala
+        if (sanitized.length > 0) {
+            sanitized = sanitized.charAt(0).toUpperCase() + sanitized.slice(1).toLowerCase();
+        }
+        
+        return sanitized;
+    }
+
 
     // uklanja ime igraca iz liste
     removePlayer(name) {
-        const index = this.players.indexOf(name);
+        const index = this.players.findIndex(p => p.name === name);
         if (index > -1) {
             this.players.splice(index, 1);
         }
-        if(this.roles.length > 0){
-            this.roles.pop();
+        if(this.pendingRoles.length > 0){
+            this.pendingRoles.pop();
         }
     }
 
@@ -53,33 +72,33 @@ export class GameState{
     }
 
     getPlayers(){
-        return [...this.players];
+        return this.players.map(p => p.name);
     }
 
     addRole(roleId){
-        if(this.roles.length !== this.players.length){
-            this.roles.push(String(roleId));
+        if(this.pendingRoles.length !== this.players.length){
+            this.pendingRoles.push(String(roleId));
         }
     }
 
     removeRole(roleId){
-        const position = this.roles.indexOf(String(roleId));
+        const position = this.pendingRoles.indexOf(String(roleId));
 
         if(position >= 0){
-            this.roles.splice(position, 1);
+            this.pendingRoles.splice(position, 1);
         }
     }
 
     getSpecificRoleCount(roleID){
-        return this.roles.filter((id) => (id === String(roleID))).length;
+        return this.pendingRoles.filter((id) => (id === String(roleID))).length;
     }
 
     getNumberOfMissingRoles(){
-        return this.roles.length - this.players.length;
+        return this.pendingRoles.length - this.players.length;
     }
 
     getCurrentPlayer(){
-        return this.players[this.currentPlayerIndex];
+        return this.players[this.currentPlayerIndex]?.name;
     }
 
     nextPlayer(){
@@ -97,7 +116,7 @@ export class GameState{
     }
 
     getCurrentRole(){
-        return this.roles[this.currentPlayerIndex];
+        return this.pendingRoles[this.currentPlayerIndex];
     }
 
     isExecutioner(){
@@ -105,18 +124,16 @@ export class GameState{
     }
 
     getExecutionTarget(){
-        return this.executionTarget.name;
+        return this.executionTarget?.name;
     }
 
     generateExecutionTarget(){
-        const filterExecutioner = this.playerObjects.filter((_, index) => this.roles[index] != ROLE_IDS.DZELAT)
+        const filterExecutioner = this.players.filter(p => p.roleId != ROLE_IDS.DZELAT)
         this.executionTarget = filterExecutioner[Math.floor((Math.random()*filterExecutioner.length))];
     }
 
     getExecutioner(){
-        for(const player of this.playerObjects){
-
-        }
+        return this.players.find(p => p.roleId === ROLE_IDS.DZELAT);
     }
 
     resetPlayerIndex(){
@@ -125,22 +142,16 @@ export class GameState{
 
     initializeGame(){
         this.shuffleArray(this.players);
-        this.shuffleArray(this.roles);
+        this.shuffleArray(this.pendingRoles);
 
-        const icons = this.iconManager.getShuffledIcons(this.players.length);
-
-        this.createPlayerObjects(icons);
-        this.nightOrder = this.generateNightOrder(this.playerObjects);
-    }
-
-    createPlayerObjects(icons){
-        this.playerObjects = this.players.map((name, index) => {
-            return new PlayerClass(
-                name,
-                this.roles[index],
-                icons[index]
-            )
+        this.players.forEach((player, index) =>{
+            player.roleId = this.pendingRoles[index];
+            player.icon = icons[index];
         });
+
+        this.nightOrder = this.generateNightOrder(this.players);
+
+        this.pendingRoles = [];
     }
 
     generateNightOrder(players){
@@ -167,14 +178,14 @@ export class GameState{
     }
 
     getAlivePlayers() {
-        return this.playerObjects.filter(p => p.isAlive);
+        return this.players.filter(p => p.isAlive);
     }
 
     /**
     * Dobavi sve mrtve igrače
     */
     getDeadPlayers() {
-        return this.playerObjects.filter(p => !p.isAlive);
+        return this.players.filter(p => !p.isAlive);
     }
 
     getNumberOfAlivePlayers(){
@@ -232,7 +243,7 @@ export class GameState{
      * Dobavi igrače po alignmentu
      */
     getPlayersByAlignment(alignment) {
-        return this.playerObjects.filter(p => 
+        return this.players.filter(p => 
         p.isAlive && p.getAlignment() === alignment
         );
     }
