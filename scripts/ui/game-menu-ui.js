@@ -13,23 +13,33 @@ export class GameMenu extends UiController{
         this.elements = {
             nightButton: this.rootElement.querySelector("#night-button"),
             backButton: this.rootElement.querySelector("#cancel-manager"),
-            playerCardHolder: this.rootElement.querySelector("#player-holder")
+            lynchButton: this.rootElement.querySelector("#lynch"),
+            playerCardHolder: this.rootElement.querySelector("#player-holder"),
+            popupWindow: this.rootElement.querySelector("#popup"),
+            popupText: this.rootElement.querySelector("#popup-text"),
+            popupButton: this.rootElement.querySelector("#popup-button")
         };
     }
 
     attachEventListeners(){
         this.addEventListener(this.elements.nightButton, "click", ()=>{
             this.onNightClicked?.();
-        })
+        });
         this.addEventListener(this.elements.backButton, "click", ()=>{
             this.onBackClick?.();
-        })
+        });
+        this.addEventListener(this.elements.lynchButton, "click", () =>{
+            this.onLynchClicked?.();
+        });
+        this.addEventListener(this.elements.popupButton, "click", () =>{
+            this.onPopupClicked();
+        });
         this.addEventListener(this.elements.playerCardHolder, "click", (e) => {
             if(e.target.classList.contains("player-card")){
                 const div = e.target.closest("div");
                 this.onPlayerCardClicked(div._player);
             }
-        })
+        });
     }
 
     displayPlayers(){
@@ -58,13 +68,28 @@ export class GameMenu extends UiController{
         name.classList.add("nametag");
         name.textContent = player.name;
 
+        card.append(icon, name);
+
         if(!player.checkIfPlayerAlive()){
             const skull = document.createElement("div");
             skull.classList.add("skull");
-            icon.append(skull);
+            card.append(skull);
         }
 
-        card.append(icon, name);
         return card;
+    }
+
+    lynchPopup(){
+        this.elements.popupText.textContent = this.gameState.handleLynch();
+        this.popup();
+    }
+
+    popup(displayType = "block"){
+        this.elements.popupWindow.style.display = displayType;
+    }
+
+    onPopupClicked(){
+        this.popup("none");
+        this.displayPlayers();
     }
 }
