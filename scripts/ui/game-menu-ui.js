@@ -48,7 +48,8 @@ export class GameMenu extends UiController{
         const columnsPerRow = this.gameState.players.length > 18 ? 5 : 6;
         this.elements.playerCardHolder.style.gridTemplateColumns = `repeat(${columnsPerRow}, 1fr)`;
 
-        for(const player of this.gameState.playerObjects){
+        for(const player of this.gameState.players){
+            console.log(player)
             const card = this.createPlayerCard(player);
             this.elements.playerCardHolder.appendChild(card);
         }
