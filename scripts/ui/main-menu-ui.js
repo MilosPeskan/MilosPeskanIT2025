@@ -45,12 +45,12 @@ export class MainMenu extends UiController{
         const name = this.elements.playerNameInput.value.trim();
 
         try{
-            this.gameState.addPlayer(name);
+            const sanitizedName = this.gameState.addPlayer(name);
 
             this.elements.description.style.display = "none";
             this.elements.playersList.style.display = "grid";
 
-            this.createPlayerListItem(name);
+            this.createPlayerListItem(sanitizedName);
 
             this.elements.playerNameInput.value = '';
 
