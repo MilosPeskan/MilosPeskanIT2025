@@ -44,7 +44,7 @@ export class LynchMenu extends UiController{
         const columnsPerRow = this.gameState.players.length > 18 ? 5 : 6;
         this.elements.playerHolder.style.gridTemplateColumns = `repeat(${columnsPerRow}, 1fr)`;
 
-        for(const player of this.gameState.playerObjects){
+        for(const player of this.gameState.players){
             if(player.checkIfPlayerAlive()){
                 const card = this.createPlayerCard(player);
                 this.elements.playerHolder.appendChild(card);
