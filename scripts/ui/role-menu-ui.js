@@ -135,7 +135,7 @@ export class RoleMenu extends UiController{
     }
 
     updateCounter(){
-        this.elements.startButton.textContent = `${this.gameState.roles.length} / ${this.gameState.players.length}`
+        this.elements.startButton.textContent = `${this.gameState.pendingRoles.length} / ${this.gameState.players.length}`
     }
 
     handleStart(){
