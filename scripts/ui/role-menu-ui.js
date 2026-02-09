@@ -135,7 +135,33 @@ export class RoleMenu extends UiController{
     }
 
     updateCounter(){
-        this.elements.startButton.textContent = `${this.gameState.pendingRoles.length} / ${this.gameState.players.length}`
+        const roleNumber = this.gameState.getNumberOfRoles();
+        const playerNumber = this.gameState.getNumberOfPlayers();
+        this.elements.startButton.textContent = `${roleNumber} / ${playerNumber}`
+        if(roleNumber === playerNumber) {
+            this.elements.startButton.textContent = "START";
+            this.emphasizeStart()
+        
+        }
+    }
+
+    emphasizeStart(){
+        const btn = this.elements.startButton;
+
+        let span = btn.querySelector("span");
+
+        // ako nema, napravi ga
+        if (!span) {
+            span = document.createElement("span");
+            span.textContent = btn.textContent;
+            btn.textContent = "";
+            btn.appendChild(span);
+        }
+
+        // reset animacije
+        span.classList.remove("pulse");
+        void span.offsetWidth; // reflow
+        span.classList.add("pulse");
     }
 
     handleStart(){
