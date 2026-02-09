@@ -1,3 +1,4 @@
+import { DEAD_ICON_PATH } from "../constants.js";
 import { UiController } from "./ui-controller.js";
 
 export class GameMenu extends UiController{
@@ -61,21 +62,18 @@ export class GameMenu extends UiController{
         card.dataset.name = player.name;
         card._player = player;
 
+        
         const icon = document.createElement("img");
         icon.classList.add("player-icon");
-        icon.src = player.iconPath;
+        if(player.checkIfPlayerAlive()){
+            icon.src = player.iconPath;
+        } else icon.src = DEAD_ICON_PATH;
 
         const name = document.createElement("h3");
         name.classList.add("nametag");
         name.textContent = player.name;
 
         card.append(icon, name);
-
-        if(!player.checkIfPlayerAlive()){
-            const skull = document.createElement("div");
-            skull.classList.add("skull");
-            card.append(skull);
-        }
 
         return card;
     }
