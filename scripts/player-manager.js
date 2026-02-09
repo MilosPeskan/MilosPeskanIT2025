@@ -19,19 +19,23 @@ export class PlayerClass{
     }
 
     getRoleData(){
+        if (this.roleId === null) return null;
         return ROLES[this.roleId];
     }
 
     getRoleName(){
-        return this.getRoleData().role;
+        const roleData = this.getRoleData();
+        return roleData ? roleData.role : null;
     }
 
     getRoleAlignment(){
-        return this.getRoleData().alignment;
+        const roleData = this.getRoleData();
+        return roleData ? roleData.alignment : null;
     }
 
     getRoleDescription(){
-        return this.getRoleData().description;
+        const roleData = this.getRoleData();
+        return roleData ? roleData.description : null;
     }
 
     isAlignment(alignment){
