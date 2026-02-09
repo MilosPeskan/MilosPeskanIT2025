@@ -76,6 +76,10 @@ export class GameState{
         return this.players.map(p => p.name);
     }
 
+    getNumberOfPlayers(){
+        return this.players.length;
+    }
+
     addRole(roleId){
         if(this.pendingRoles.length !== this.players.length){
             this.pendingRoles.push(String(roleId));
@@ -94,8 +98,12 @@ export class GameState{
         return this.pendingRoles.filter((id) => (id === String(roleID))).length;
     }
 
+    getNumberOfRoles(){
+        return this.pendingRoles.length;
+    }
+
     getNumberOfMissingRoles(){
-        return this.pendingRoles.length - this.players.length;
+        return this.getNumberOfRoles() - this.getNumberOfPlayers();
     }
 
     getCurrentPlayer(){
