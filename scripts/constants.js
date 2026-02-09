@@ -105,5 +105,6 @@ export const PLAYER_ICONS = [
 ]
 
 export const ICON_PATH = "../../resourses/silluetes/";
+export const DEAD_ICON_PATH = "../../resourses/silluetes/dead.png";
 
 export const ORDER_OF_ROLES = [20, 11, 18, 7, 1, 14, 6, 19, 17, 2, 13, 4, 15, 8, 12, 16];
