@@ -35,6 +35,7 @@ export class GameState{
         }
 
         this.players.push(new PlayerClass(sanitizedName, null, null));
+        return sanitizedName;
     }
 
     sanitizeName(name) {
@@ -116,7 +117,7 @@ export class GameState{
     }
 
     getCurrentRole(){
-        return this.pendingRoles[this.currentPlayerIndex];
+        return this.players[this.currentPlayerIndex].roleId;
     }
 
     isExecutioner(){
@@ -144,9 +145,11 @@ export class GameState{
         this.shuffleArray(this.players);
         this.shuffleArray(this.pendingRoles);
 
+        const icons = this.iconManager.getShuffledIcons(this.players.length);
+
         this.players.forEach((player, index) =>{
             player.roleId = this.pendingRoles[index];
-            player.icon = icons[index];
+            player.iconPath = icons[index];
         });
 
         this.nightOrder = this.generateNightOrder(this.players);
