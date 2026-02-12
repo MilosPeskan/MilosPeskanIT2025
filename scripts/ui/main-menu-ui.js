@@ -37,8 +37,16 @@ export class MainMenu extends UiController{
         })
 
         this.addEventListener(this.elements.nextButton, "click", () => {
-            this.onNextClick?.();
+            this.handleNextClick();
         })
+    }
+
+    handleNextClick(){
+        if(this.gameState.getNumberOfPlayers() < 4) {
+            alert("Igra mora da ima minimum 4 igrača!");
+            return;
+        }
+        this.onNextClick?.();
     }
 
     handleAddPlayer(){
@@ -73,9 +81,15 @@ export class MainMenu extends UiController{
         const nameSpan = document.createElement("span");
         nameSpan.textContent = name;
         nameSpan.className = "player-name";
+
+        if(name.length > 15){
+            li.style.fontSize = "3.3vh";
+        }
+        else if (name.length > 10){
+            li.style.fontSize = "4vh";
+        }
         
         const deleteButton = document.createElement('button');
-        deleteButton.innerText = "X";
         deleteButton.className = "delete-button";
 
         li.append(nameSpan, deleteButton);
