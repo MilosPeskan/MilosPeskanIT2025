@@ -78,6 +78,12 @@ export class RoleMenu extends UiController{
         const controls = this.createRoleControls(id);
     
         roleCard.append(roleName, roleAlignment, roleCategory, roleDescription, controls)
+        if(data.hasMaximum){
+            const note = document.createElement("p");
+            note.textContent = `Max: ${data.hasMaximum}`
+            note.classList.add("role-note");
+            roleCard.append(note);
+        }
         return roleCard;
     }
 
