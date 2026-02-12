@@ -108,15 +108,40 @@ export class UiCoordinator{
 
         this.gameMenu.onNightClicked = () => {
             this.transitionTo(this.gameMenu, this.nightMenu, "block");
+            this.nightMenu.displayCurrentStep();
         }
-
-        this.nightMenu.onActionClicked = (action) => {
-            this.transitionTo(this.nightMenu, this.actionMenu, "grid");
-        };
 
         this.gameMenu.onLynchClicked = () => {
             this.transitionTo(this.gameMenu, this.lynchMenu, "grid");
         }
+
+        this.actionMenu.onActionComplete = () => {
+            // Akcija izvršena, vrati se na night menu
+            this.transitionTo(this.actionMenu, this.nightMenu, "block");
+            
+            // Automatski pređi na sledeći korak
+            this.nightMenu.advanceToNextStep();
+        };
+
+        this.actionMenu.onActionSkipped = () => {
+            // Akcija preskočena, vrati se na night menu
+            this.transitionTo(this.actionMenu, this.nightMenu, "block");
+            
+            // Automatski pređi na sledeći korak
+            this.nightMenu.advanceToNextStep();
+        };
+
+        this.nightMenu.onNightComplete = (message) => {
+            // Noć je završena, vrati se na game menu
+            this.transitionTo(this.nightMenu, this.gameMenu, "grid");
+            this.gameMenu.nightPopup(message);
+        };
+
+        this.nightMenu.onActionRequested = (roleId, players) => {
+            // Otvori action menu za tu ulogu i igrača
+            this.transitionTo(this.nightMenu, this.actionMenu, "grid");
+            this.actionMenu.setupAction(roleId, players);
+        };
 
         this.lynchMenu.onCancelClicked = () => {
             this.transitionTo(this.lynchMenu, this.gameMenu, "grid");
@@ -134,6 +159,12 @@ export class UiCoordinator{
     }
 
     backToMainMenu(fromMenu){
+        // Reset game state
+        this.gameState.players = [];
+        this.gameState.pendingRoles = [];
+        this.gameState.nightQueue = [];
+        this.gameState.nightIndex = 0;
+        
         this.transitionTo(fromMenu, this.mainMenu);
     }
 
