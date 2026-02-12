@@ -21,7 +21,7 @@ export const ROLE_IDS = {
   SERIF: 14,
   SPIJUN: 15,
   TRAGAC: 16,
-  MEDIUM: 17,
+  REDAKTOR: 17,
   ESKORT: 18,
   POGREBNIK: 19,
   AMNEZICAR: 20
@@ -36,15 +36,32 @@ export const MESSAGES = {
 
 export const LYNCH_MESSAGE = {
   NO_VOTES: "Niko nije glasao, glasanje se preskače.",
-  LYNCHED: (name, votes) => `Sa ukupno ${votes} glasova, izlasan je igrač ${name}.`,
-  TIE: (votes, names, last) => `Niko nije izglasan, ukupno ${votes} glasova imaju ${names} i ${last}.`,
-  JESTER: (votes, name) => `Sa ukupno ${votes} glasova, izlasan je igrač ${name}. \n Igrač ${name} je bio ludak, ludak je pobedio!`,
-  EXECUTIONER: (votes, name, executioner) => `Sa ukupno ${votes} glasova, izlasan je igrač ${name}. \n Igrač ${name} je bio meta dželata ${executioner}, dželat je pobedio!`,
+  LYNCHED: (name, votes) => `Sa ukupno ${votes} ${VOTES_PLURAL_INSTRUMENTAL(votes)}, izlasan je igrač ${name}.`,
+  TIE: (votes, names, last) => `Niko nije izglasan, ukupno ${votes} ${VOTES_PLURAL_ACUSATIVE(votes)} imaju ${names} i ${last}.`,
+  JESTER: (votes, name) => `${LYNCH_MESSAGE.LYNCHED(name, votes)} \n Igrač ${name} je bio ludak, ludak je pobedio!`,
+  EXECUTIONER: (votes, name, executioner) => `${LYNCH_MESSAGE.LYNCHED(name, votes)} \n Igrač ${name} je bio meta dželata ${executioner}, dželat je pobedio!`,
+}
+
+function VOTES_PLURAL_ACUSATIVE(votes) {
+  if(votes == 1) return "glas"
+  else if (votes > 1 && votes < 5) return "glasa"
+  else return "glasova"
+}
+
+function VOTES_PLURAL_INSTRUMENTAL(votes) {
+  if(votes == 1) return "glasom";
+  else if (votes > 1 && votes < 5) return "glasa";
+  else return "glasova";
 }
 
 export const WIN_MESSAGE = {
   TOWN_WIN: `Pobedio je grad!`,
   MAFIA_WIN: `Mafija je pobedila!`
+}
+
+export const ROLE_MESSAGE = {
+  MAFIA_VISIT: (players) => `Mafija je posetila: ${players}`,
+  VISITED: (player, visited) => `Igrač ${player} je posetio ${visited}`
 }
 
 export const UI_TEXT = {
@@ -55,7 +72,17 @@ export const UI_TEXT = {
 };
 
 export const IMAGES = [
-  'paper1.png'
+  'paper1.png',
+  'paper2.png',
+  'paper3.png',
+  'paper4.png',
+  'paper5.png',
+  'paper6.png',
+  'paper7.png',
+  'paper8.png',
+  'paper9.png',
+  'paper10.png',
+  'paper11.png'
 ];
 
 export const IMAGE_PATH = 'resourses/plates/'
@@ -78,7 +105,7 @@ export const COLOR = {
   BEWITCHED: "#f1327bff"
 }
 
-export const ROLE_REVEAL_TIMER = 2500; //2.5 sekundi
+export const ROLE_REVEAL_TIMER = 500; //2.5 sekundi
 export const DISCUSSION_TIMER = 300; // 5 minuta
 
 export const PLAYER_ICONS = [
@@ -104,7 +131,39 @@ export const PLAYER_ICONS = [
   "silueta20.png"
 ]
 
+export const ALIGNMENT = {
+  MAFIA:"Mafija",
+  TOWN:"Selo",
+  NEUTRAL_KILLING:"",
+  NEUTRAL:"Neutralno"
+}
+
 export const ICON_PATH = "../../resourses/silluetes/";
 export const DEAD_ICON_PATH = "../../resourses/silluetes/dead.png";
 
-export const ORDER_OF_ROLES = [20, 11, 18, 7, 1, 14, 6, 19, 17, 2, 13, 4, 15, 8, 12, 16];
+export const ORDER_OF_ROLES = [20, 11, 18, 7, 30, 21, 23, 17, 1, 6, 19, 26, 28, 2, 13, 4, 15, 8, 12, 22, 29, 32, 16];
+
+export const STATUS = {
+  INVESTIGATED:"istražen",
+  PROTECTED:"zaštićen",
+  ATTACK:"napadnut",
+  BLOCKED:"blokiran",
+  BEWITCHED:"omađijan",
+  BEWITCHED_TARGET:"meta omađijanog",
+  DOUSED:"poliven benzinom",
+  IGNITED: "zapaljen",
+  BODYGUARDED: (player) => `zaštićen telohraniteljem ${player}`,
+  TRACKED:"praćen",
+  CENSORED:"cenzurisan",
+  DUG_UP:"iskopan",
+  AMESIAC_TARGET:"meta amnezičara",
+  CONFUSED:"zbunjen",
+  SILENCED:"ućutkan",
+  FALSIFIED:"falsifikovan",
+  RECORDED:"snimljen",
+  JUDGED:"suđen",
+  MARKED_BY_WISITOR:"označen od posetioca",
+  LOCKED_UP:"zatvoren",
+  PARASITE_TARGET:"parazitovan"
+
+}
