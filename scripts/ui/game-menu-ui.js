@@ -50,7 +50,6 @@ export class GameMenu extends UiController{
         this.elements.playerCardHolder.style.gridTemplateColumns = `repeat(${columnsPerRow}, 1fr)`;
 
         for(const player of this.gameState.players){
-            console.log(player)
             const card = this.createPlayerCard(player);
             this.elements.playerCardHolder.appendChild(card);
         }
@@ -80,6 +79,11 @@ export class GameMenu extends UiController{
 
     lynchPopup(){
         this.elements.popupText.textContent = this.gameState.handleLynch();
+        this.popup();
+    }
+
+    nightPopup(message){
+        this.elements.popupText.innerHTML = message;
         this.popup();
     }
 
