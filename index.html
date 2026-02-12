@@ -52,7 +52,7 @@
                     <button id="next-button"></button>
                 </div>
                 <form id="player-input-form">
-                    <input type="text" id="input-name" placeholder="Unesite ime igrača">
+                    <input type="text" id="input-name" maxlength="20" placeholder="Unesite ime igrača">
                     <button type="submit" id="button-add-player"></button>
                 </form>
             </div>
@@ -161,10 +161,23 @@
             </div>
             <button id="back-to-manager"></button>
         </div>
-        <div id="nightMenu" class="menu">
-            <p id="wake-up-role"> Role placeholder</p>
-            <div id="button-holder">
-                <button id="action" class="action-button"></button>
+        <div id="nightMenu" class="menu night-theme">
+            <div class="night-container">
+                <div class="night-header">
+                    <p id="night-progress" class="night-progress">Korak 1 / 12</p>
+                </div>
+                <div class="night-role-display">
+                    <div id="status-stamp">BLOCKED</div>
+                    <h2 id="wake-up-role" class="night-role-title">Budi se...</h2>
+                    <p id="wake-up-player" class="night-player-name">Ime Igrača</p>
+                </div>
+                <div id="button-holder" class="night-button-container">
+                    <button id="action" class="action-button">Izvrši akciju</button>
+                    <button id="skip-night-step" class="skip-button">Preskoči</button>
+                </div>
+                <button id="process-night-btn" class="process-night-button" style="display: none;">
+                    Obradi noćne akcije
+                </button>
             </div>
         </div>
         <div id="lynchMenu" class="menu player-display-menu">
@@ -175,26 +188,32 @@
             </div>
             <div class="player-card-holder" id="lynch-holder"></div>
         </div>
-        <div id="actionMenu" class="menu player-display-menu">
-            <div class="ribbon player-menu-ribbon">
-                <button id="lynch"></button>
-                <div class="start">
-                    <button id="night-button"> Spavanje </button>
+        <div id="actionMenu" class="menu action-theme">
+            <div id="popup">
+                <div id="popup-text"> Placeholder </div>
+                <button id="popup-button"></button>
+            </div>
+            <div class="action-container">
+                <div class="action-header">
+                    <h2 id="role-title" class="action-role-title">Uloga</h2>
+                    <p id="role-description" class="action-description">Opis akcije</p>
+                    <div id="player-button-holder"></div>
                 </div>
-                <button class="cancel" id="cancel-manager"></button>
-            </div>
-            <div class="role-info">
-                <h2 id="role-title"></h2>
-                <p id="role-description"></p>
-            </div>
-            
-            <div id="target-holder" class="target-grid"></div>
-            
-            <div id="action-result" class="result-display"></div>
-            
-            <div class="action-buttons">
-                <button id="skip-action">Preskoči</button>
-                <button id="confirm-action" disabled>Potvrdi akciju</button>
+
+                <!-- Target Selection Grid -->
+                <div id="target-holder" class="target-grid"></div>
+
+                <!-- Action Result Display -->
+                <div id="action-result" class="action-result" style="display: none;">
+                    Rezultat akcije
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button id="skip-action" class="skip-action-btn">Preskoči</button>
+                    <button id="confirm-action" class="confirm-action-btn">Potvrdi akciju</button>
+                    <button id="secondary-action" class="confirm-action-btn">Druga akcija</button>
+                </div>
             </div>
         </div>
         <script type="module" src="scripts/main.js"></script>
