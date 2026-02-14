@@ -70,6 +70,9 @@ export class NightMenu extends UiController {
         if (roleId == ROLE_IDS.MAFIJAS){
             roleName = "Mafija";
         }
+        if( roleId == ROLE_IDS.AMNEZICAR){
+            roleName = "Amnezičar";
+        }
 
         this.elements.role.textContent = `Budi se ${roleName}`;
         if(players.length === 1){
@@ -101,7 +104,11 @@ export class NightMenu extends UiController {
         // Proveri da li je igrač živ
         const allDead = this.gameState.isEveryPlayerWithRoleDead(players);
         const allBlocked = this.gameState.isEveryPlayerWithRoleBlocked(players);
-        if(allDead) {
+        if(this.gameState.hasRemembered(players)){
+            this.updateActionButton("se setio");
+            return;
+        }
+        else if(allDead) {
             this.updateActionButton("mrtav");
             return;
         }
