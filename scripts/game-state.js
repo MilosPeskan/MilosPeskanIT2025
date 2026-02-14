@@ -1,4 +1,4 @@
-import { ALIGNMENT, CONFIG, LYNCH_MESSAGE, MESSAGES, ORDER_OF_ROLES, ROLE_IDS, STATUS, WIN_MESSAGE } from './constants.js';
+import { ALIGNMENT, CONFIG, LYNCH_MESSAGE, MESSAGES, ORDER_OF_ROLES, ROLE_IDS, ROLE_MESSAGE, STATUS, WIN_MESSAGE } from './constants.js';
 import { ROLES } from './data.js';
 import { PlayerClass } from './player-manager.js';
 import { IconManager } from './utils/icon-manager.js';
@@ -18,13 +18,17 @@ export class GameState{
         this.nightIndex = 0;
 
         this.nightActions = {
-            kills: [], // targets marked for kill
-            bodyguard: new Map(), // investigator.id -> target.id
-            silenced: []
+            kills: new Map(), // attacker -> target
+            bodyguard: new Map(), // bodyguard -> target
+            silenced: [],
+            exposed: new Map() //attacker -> target
         };
 
         this.deaths = [];
         this.survived = [];
+        this.visitorVisited = 0;
+        this.visitorEvent = false;
+        this.visitorEventNights = 0;
     }
 
     //funkcija za dodavanje igraca
@@ -304,8 +308,11 @@ export class GameState{
 
         if(topVoted.length > 1) return LYNCH_MESSAGE.TIE(maxVote, listOfNames.slice(0, -1).join(', '), listOfNames.at(-1));
         else{
-            topVoted[0].kill();
-            return this.checkLynchWinCondition(topVoted[0], maxVote);
+            if(!topVoted[0].hasStatus(STATUS.JUDGED)){
+                topVoted[0].kill();
+                return this.checkLynchWinCondition(topVoted[0], maxVote);
+            }
+            else return LYNCH_MESSAGE.PROTECTED(topVoted[0].name, maxVote)
         }
     }
 
@@ -320,17 +327,17 @@ export class GameState{
 
     getRandomPlayerRole(target){
         const playersWithoutTarget = this.players.filter(p => p !== target);
-        return ROLES[playersWithoutTarget[Math.floor(Math.random() * playersWithoutTarget.length)].roleId].role;
+        return ROLES[playersWithoutTarget[Math.floor(Math.random() * playersWithoutTarget.length)].roleId];
     }
 
     getRandomTownRole(){
         const townPlayers = this.players.filter(p => p.getRoleAlignment() == ALIGNMENT.TOWN);
-        return ROLES[townPlayers[Math.floor(Math.random() * townPlayers.length)].roleId].role;
+        return ROLES[townPlayers[Math.floor(Math.random() * townPlayers.length)].roleId];
     }
 
     getRandomMafiaRole(){
         const mafiaPlayers = this.players.filter(p => p.getRoleAlignment() == ALIGNMENT.MAFIA && p.roleId != ROLE_IDS.KUM);
-        return ROLES[mafiaPlayers[Math.floor(Math.random() * mafiaPlayers.length)].roleId].role;
+        return ROLES[mafiaPlayers[Math.floor(Math.random() * mafiaPlayers.length)].roleId];
     }
 
     getAllUniqueMafia(){
@@ -345,6 +352,10 @@ export class GameState{
 
     isEveryPlayerWithRoleBlocked(players){
         return players.every(player => player.checkIfPlayerBlocked());
+    }
+
+    hasRemembered(players){
+        return players[0].remembered;
     }
 
     isEveryPlayerActed(players){
@@ -374,24 +385,84 @@ export class GameState{
         return this.showNightResults();
     }
 
+    calculateVisitorVisited(){
+        this.visitorVisited = 0;
+        for(const player of this.players) {
+            if(player.hasStatus(STATUS.MARKED_BY_VISITOR) && player.isAlive){
+                this.visitorVisited++;
+            }
+        }
+        if(this.visitorVisited >= CONFIG.VISITOR_NUMBER_OF_PLAYERS_MARKED && this.checkIfVisitorAlive() && !this.visitorEvent){
+            this.visitorEvent = true;
+            return ROLE_MESSAGE.VISITOR_EVENT;
+        } else return "";
+    }
+
     showNightResults(){
         let message = ""
+        message += this.calculateVisitorVisited();
         if(this.nightActions.silenced.length > 0){
             message += `<p> Igrači koji su ućutkani: ${this.nightActions.silenced.join(', ')}</p>`;
         }
         if(this.deaths.length > 0) {
             message += `<p>Igrači koji su ubijeni: ${this.deaths.join(', ')}</p>`;
         }
+        if(this.nightActions.exposed.size > 0){
+            message += this.generateReporterExposed();
+        }
         if(this.survived.length > 0){
             message += `<p>Igrači koji su bili napadnuti: ${this.survived.join(', ')}</p>`;
         }
+        message += this.checkIfVisitorKilled();
         const win = this.checkWinCondition();
+        if(this.visitorEvent){
+            this.visitorEventNights++;
+        }
         if(win){
             message += win;
         }
         this.resetNight();
         if(message.length > 0) return message
         else return "Noć je bila mirna."
+    }
+
+    visitorEventMessage(){
+        if(this.checkIfVisitorAlive() && CONFIG.VISITOR_EVENT_NIGHTS > this.visitorEventNights){
+            return `<p> Ostalo je još ${CONFIG.VISITOR_EVENT_NIGHTS - this.visitorEventNights} noći! </p>`
+        } else if (this.checkIfVisitorAlive()) {
+            this.visitorEvent = false;
+            return `<p> Svi u gradu su nestali! \n Posetilac je pobedio! </p>`
+        }
+        this.visitorEvent = false;
+        return "";
+    }
+
+    checkIfVisitorKilled(){
+        if(!this.checkIfVisitorAlive) {
+            this.visitorEvent = false;
+            return ROLE_MESSAGE.VISITOR_STOPPED;
+        }
+        return "";
+    }
+
+    checkIfVisitorAlive(){
+        console.log(this.players.filter(p => p.roleId == ROLE_IDS.POSETILAC)[0].isAlive)
+        return this.players.filter(p => p.roleId == ROLE_IDS.POSETILAC)[0].isAlive;
+    }
+
+    generateReporterExposed(){
+        let message = "";
+        for(const [attacker, target] of this.nightActions.exposed){
+            message += `<p>Reporter je snimio igrača ${attacker} kako napada igrača ${target}</p>`;
+        }
+        return message
+    }
+
+    switchAmnesiacRoleInQueue(amnesiac, target){
+        const targetRoleId = Number(target.roleId);
+
+        let targetStep = this.nightQueue.find(step => step.roleId == targetRoleId);
+        targetStep.players.push(amnesiac)
     }
 
     resetNight(){
@@ -402,9 +473,10 @@ export class GameState{
 
     clearNightActions() {
         this.nightActions = {
-            kills: [], 
+            kills: new Map(), 
             bodyguard: new Map(),
-            silenced: []
+            silenced: [],
+            exposed: new Map()
         };
     }
 
@@ -417,30 +489,35 @@ export class GameState{
     }
 
     applyKills() {
-        this.nightActions.kills.forEach(player => {            
-            if (player && player.isAlive) {
-                // Proveri da li je zaštićen
-                if(player.hasStatus(STATUS.IGNITED)){
-                    player.kill();
-                    this.deaths.push(player.name);
-                    console.log(`${player.name} je zapaljen!`);
-                } else if (!player.hasStatus(STATUS.PROTECTED)) {
-                    const bodyguard = this.checkIfBodyguarded(player)
-                    if(bodyguard){
-                        bodyguard.kill();
-                        this.deaths.push(bodyguard.name);
-                        console.log(`${bodyguard.name} je ubijen tokom noći!`);
-                        return;
+        for (const [attacker, target] of this.nightActions.kills){
+            const targets = Array.isArray(target) ? target : [target];
+            for (const t of targets) {
+                if (t && t.isAlive) {
+                    // Proveri da li je zaštićen
+                    if(t.hasStatus(STATUS.IGNITED)){
+                        t.kill();
+                        this.deaths.push(t.name);
+                    } else if (!t.hasStatus(STATUS.PROTECTED)) {
+                        const bodyguard = this.checkIfBodyguarded(t)
+                        if(bodyguard){
+                            if(this.checkIfRecorded(bodyguard)){
+                                this.nightActions.exposed.set(attacker.name, target.name);
+                            }
+                            bodyguard.kill();
+                            this.deaths.push(bodyguard.name);
+                            return;
+                        }
+                        if(this.checkIfRecorded(t)){
+                            this.nightActions.exposed.set(attacker.name, target.name);
+                        }
+                        t.kill();
+                        this.deaths.push(t.name);
+                    } else {
+                        this.survived.push(t.name);
                     }
-                    player.kill();
-                    this.deaths.push(player.name);
-                    console.log(`${player.name} je ubijen tokom noći!`);
-                } else {
-                    console.log(`${player.name} je bio zaštićen!`);
-                    this.survived.push(player.name);
                 }
             }
-        });
+        }
     }
 
     checkIfBodyguarded(player){
@@ -449,6 +526,10 @@ export class GameState{
                 return key;
             }
         }
+    }
+
+    checkIfRecorded(target){
+        return target.hasStatus(STATUS.RECORDED);
     }
 
     cleanupNightStatuses() {
@@ -477,21 +558,41 @@ export class GameState{
     /**
      * Proveri ko je pobedio
      */
-    checkWinCondition() {
-        const alive = this.getAlivePlayers();
-        const mafia = alive.filter(p => p.isAlignment('Mafija'));
-        const town = alive.filter(p => p.isAlignment('Selo'));
-        
-        if (mafia.length === 0) return this.townWin();
-        if (mafia.length >= town.length || mafia.length === town.length && alive.length === 2) return this.mafiaWin();
+    checkWinCondition() {        
+        if (this.visitorEvent) {
+            return this.visitorEventMessage();
+        }
+        if (this.townWinCon()) return this.townWin();
+        if (this.mafiaWinCon()) return this.mafiaWin();
         
         return null; // Igra se nastavlja
+    }
+
+    mafiaWinCon(){
+        const alive = this.getAlivePlayers();
+        const town = alive.filter(p => p.isAlignment('Selo'));
+        const mafia = alive.filter(p => p.isAlignment('Mafija'));
+        return mafia.length >= town.length || mafia.length === town.length && alive.length === 2;
+    }
+
+    townWinCon(){
+        const alive = this.getAlivePlayers();
+        const mafia = alive.filter(p => p.isAlignment('Mafija'));
+        return mafia.length === 0;
     }
 
     checkLynchWinCondition(player, votes){
         if(player.roleId == ROLE_IDS.LUDAK) return this.jesterWin(player, votes);
         if(player === this.executionTarget) return this.executionerWin(player, votes);
-        if(this.checkWinCondition()) return LYNCH_MESSAGE.LYNCHED(player.name, votes) + `\n` + this.checkWinCondition();
+        if(!this.checkIfVisitorAlive() && this.mafiaWinCon() || !this.checkIfVisitorAlive() && this.townWinCon()) {
+            this.visitorEvent = false;
+            return `${LYNCH_MESSAGE.LYNCHED(player.name, votes)} \n ${ROLE_MESSAGE.VISITOR_STOPPED} \n ${this.checkWinCondition()}`;
+        }
+        if(!this.checkIfVisitorAlive()) {
+            this.visitorEvent = false;
+            return `${LYNCH_MESSAGE.LYNCHED(player.name, votes)} \n ${ROLE_MESSAGE.VISITOR_STOPPED}`;
+        }
+        if(this.mafiaWinCon() || this.townWinCon()) return `${LYNCH_MESSAGE.LYNCHED(player.name, votes)} \n ${this.checkWinCondition()}`;
         return LYNCH_MESSAGE.LYNCHED(player.name, votes);
     }
 
