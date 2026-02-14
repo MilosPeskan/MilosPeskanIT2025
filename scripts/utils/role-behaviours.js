@@ -31,11 +31,14 @@ export const ROLE_BEHAVIOURS = {
             if(target.hasStatus(STATUS.CENSORED)){
                 text = text.replace(/\S/g, "█");
             } else if(player.hasStatus(STATUS.CONFUSED)){
-                text = `Igrač ${target.name} ima ulogu ${gameState.getRandomPlayerRole(target)}`
+                const role = gameState.getRandomPlayerRole(target);
+                text = `Igrač ${target.name} ima ulogu ${role.role} (${role.alignment})`
             } else if(target.roleId == ROLE_IDS.KUM){
-                text = `Igrač ${target.name} ima ulogu ${gameState.getRandomTownRole()}`
+                const role = gameState.getRandomTownRole();
+                text = `Igrač ${target.name} ima ulogu ${role.role} (${role.alignment})`
             } else if(target.hasStatus(STATUS.FALSIFIED)){
-                text = `Igrač ${target.name} ima ulogu ${gameState.getRandomMafiaRole()}`
+                const role = gameState.getRandomMafiaRole();
+                text = `Igrač ${target.name} ima ulogu ${role.role} (${role.alignment})`
             }
 
             // Vrati poruku koja će biti prikazana igraču
@@ -80,7 +83,7 @@ export const ROLE_BEHAVIOURS = {
             // Svaki mafijaš glasa za metu
             target.addStatus(STATUS.ATTACK);
             target.addVisitor(player);
-            gameState.nightActions.kills.push(target);
+            gameState.nightActions.kills.set(player, target);
                         
             return {
                 success: true,
@@ -105,11 +108,14 @@ export const ROLE_BEHAVIOURS = {
             if(target.hasStatus(STATUS.CENSORED)){
                 text = text.replace(/\S/g, "█");
             } else if(player.hasStatus(STATUS.CONFUSED)){
-                text = `Igrač ${target.name} ima ulogu ${gameState.getRandomPlayerRole(target)}`
+                const role = gameState.getRandomPlayerRole(target);
+                text = `Igrač ${target.name} ima ulogu ${role.role} (${role.alignment})`
             } else if(target.roleId == ROLE_IDS.KUM){
-                text = `Igrač ${target.name} ima ulogu ${gameState.getRandomTownRole()}`
+                const role = gameState.getRandomTownRole();
+                text = `Igrač ${target.name} ima ulogu ${role.role} (${role.alignment})`
             } else if(target.hasStatus(STATUS.FALSIFIED)){
-                text = `Igrač ${target.name} ima ulogu ${gameState.getRandomMafiaRole()}`
+                const role = gameState.getRandomMafiaRole();
+                text = `Igrač ${target.name} ima ulogu ${role.role} (${role.alignment})`
             }
             
             // Vrati poruku koja će biti prikazana igraču
@@ -150,7 +156,7 @@ export const ROLE_BEHAVIOURS = {
             // Dodaj u listu za ubistvo
             target.addStatus(STATUS.ATTACK);
             target.addVisitor(player);
-            gameState.nightActions.kills.push(target);
+            gameState.nightActions.kills.set(player, target);
                         
             return {
                 success: true,
@@ -207,8 +213,9 @@ export const ROLE_BEHAVIOURS = {
                 dousedPlayers.forEach(p => {
                     p.addStatus(STATUS.IGNITED);
                     p.removeStatus(STATUS.DOUSED);
-                    gameState.nightActions.kills.push(p);
                 });
+
+                gameState.nightActions.kills.set(player, dousedPlayers);
                 
                 return {
                     success: true,
@@ -342,12 +349,24 @@ export const ROLE_BEHAVIOURS = {
             if (!target.isAlive) {
                 target.addStatus(STATUS.DUG_UP);
                 target.addVisitor(player);
-                const role = target.getRoleName();
+                let text = `Igrač ${target.name} je bio ${target.getRoleName()}`;
+                if(target.hasStatus(STATUS.CENSORED)){
+                    text = text.replace(/\S/g, "█");
+                } else if(player.hasStatus(STATUS.CONFUSED)){
+                    const role = gameState.getRandomPlayerRole(target);
+                    text = `Igrač ${target.name} je bio ${role.role} (${role.alignment})`
+                } else if(target.roleId == ROLE_IDS.KUM){
+                    const role = gameState.getRandomTownRole();
+                    text = `Igrač ${target.name} je bio ${role.role} (${role.alignment})`
+                } else if(target.hasStatus(STATUS.FALSIFIED)){
+                    const role = gameState.getRandomMafiaRole();
+                    text = `Igrač ${target.name} je bio ${role.role} (${role.alignment})`
+                }
                 
                 return {
                     success: true,
                     result: role,
-                    popup: `${target.name} je bio ${role}`
+                    popup: text
                 };
             }
             
@@ -367,11 +386,14 @@ export const ROLE_BEHAVIOURS = {
         execute(player, target, gameState) {
             if (!target.isAlive) {
                 // Preuzmi ulogu mrtvog igrača
+                player.remember();
+                target.addVisitor(player);
                 player.roleId = target.roleId;
+                gameState.switchAmnesiacRoleInQueue(player, target);
                 
                 return {
                     success: true,
-                    message: `Preuzeli ste ulogu: ${target.getRoleName()}`,
+                    popup: `Preuzeli ste ulogu: ${target.getRoleName()}`,
                     result: target.getRoleName()
                 };
             }
@@ -436,24 +458,54 @@ export const ROLE_BEHAVIOURS = {
     24: null,
     25: null,
     26: {// Reporter
-        role: "Reporter",
-        alignment: "Selo",
-        category: "Istraživačka",
-        description: "Tokom noći bira igrača. Ako ta meta umre, otkriva se njen ubica."
+        name: "Koga ozvučuje reporter?",
+        canTargetDead: false,
+        canTargetSelf: false,
+        needsTarget: true,
+
+        execute(player, target, gameState) {
+            target.addStatus(STATUS.RECORDED);
+            target.addVisitor(player);
+
+            return {
+                success: true,
+                message: `Ozvučili ste igrača ${target.name}`
+            };
+        }
     },
     27: null,
     28: {// Sudija
-        role: "Sudija",
-        alignment: "Selo",
-        category: "Zaštitna",
-        description: "Tokom noći može zaštititi jednog igrača od pogubljenja sledećeg dana.",
-        hasMaximum: 1
+        name: "Koga sudija štiti od pogubljenja?",
+        canTargetDead: false,
+        canTargetSelf: false,
+        needsTarget: true,
+
+        execute(player, target, gameState) {
+            target.addStatus(STATUS.JUDGED);
+            target.addVisitor(player);
+
+            return {
+                success: true,
+                message: `Zaštitili ste igrača ${target.name} od pogubljenja`
+            };
+        }
     },
     29: {// Posetilac
-        role: "Posetilac",
-        alignment: "Neutralna",
-        category: "Haotična",
-        description: "Tokom noći označava igrače. Ukoliko postoje tri žive označene mete, počinje odbrojavanje nakon kog automatski pobeđuje."
+        name: "Koga će █████████ posetiti?",
+        canTargetDead: false,
+        canTargetSelf: false,
+        needsTarget: true,
+
+        execute(player, target, gameState) {
+            target.addStatus(STATUS.MARKED_BY_VISITOR);
+            target.addVisitor(player);
+
+            return {
+                success: true,
+                message: `Posetili ste igrača ${target.name}.`, 
+                popup: `Ukupno posećenih ${gameState.visitorVisited + 1}`
+            };
+        }
     },
     30: {// Tamnicar
         role: "Tamničar",
@@ -506,7 +558,9 @@ export function getValidTargets(roleId, player, gameState) {
     }
 
     if(roleId == ROLE_IDS.PIROMAN){
-        targets = targets.filter(t => t.hasStatus(STATUS.DOUSED) === false);
+        targets = targets.filter(t => !t.hasStatus(STATUS.DOUSED));
+    } else if (roleId == ROLE_IDS.POSETILAC){
+        targets = targets.filter(t => !t.hasStatus(STATUS.MARKED_BY_VISITOR));
     }
     
     // Ukloni sebe ako ne može sebe
