@@ -1,7 +1,9 @@
 export const CONFIG = {
   MAX_PLAYERS: 20,
   MIN_NAME_LENGHT: 2,
-  MAX_NAME_LENGTH: 20
+  MAX_NAME_LENGTH: 20,
+  VISITOR_NUMBER_OF_PLAYERS_MARKED: 3,
+  VISITOR_EVENT_NIGHTS: 3
 }
 
 export const ROLE_IDS = {
@@ -24,7 +26,19 @@ export const ROLE_IDS = {
   REDAKTOR: 17,
   ESKORT: 18,
   POGREBNIK: 19,
-  AMNEZICAR: 20
+  AMNEZICAR: 20,
+  TROVAC: 21,
+  UCENJIVAC: 22,
+  FALSIFIKATOR: 23,
+  TUZILAC: 24,
+  SNAJPERISTA: 25,
+  REPORTER: 26,
+  OSVETNIK: 27,
+  SUDIJA: 28,
+  POSETILAC: 29,
+  TAMNICAR: 30,
+  GRADONACELNIK: 31,
+  PARAZIT:32
 }
 
 export const MESSAGES = {
@@ -36,10 +50,13 @@ export const MESSAGES = {
 
 export const LYNCH_MESSAGE = {
   NO_VOTES: "Niko nije glasao, glasanje se preskače.",
-  LYNCHED: (name, votes) => `Sa ukupno ${votes} ${VOTES_PLURAL_INSTRUMENTAL(votes)}, izlasan je igrač ${name}.`,
-  TIE: (votes, names, last) => `Niko nije izglasan, ukupno ${votes} ${VOTES_PLURAL_ACUSATIVE(votes)} imaju ${names} i ${last}.`,
-  JESTER: (votes, name) => `${LYNCH_MESSAGE.LYNCHED(name, votes)} \n Igrač ${name} je bio ludak, ludak je pobedio!`,
-  EXECUTIONER: (votes, name, executioner) => `${LYNCH_MESSAGE.LYNCHED(name, votes)} \n Igrač ${name} je bio meta dželata ${executioner}, dželat je pobedio!`,
+  BASE: (name, votes) => `Sa ukupno ${votes} ${VOTES_PLURAL_INSTRUMENTAL(votes)}, izlasan je igrač ${name}.`,
+  PROTECTED: (name, votes) => `<p>${LYNCH_MESSAGE.BASE(name, votes)} \n Sudija je zaštitio igrača ${name} </p><p> Igrač ${name} je preživeo! </p>`,
+  LYNCHED: (name, votes) => `<p>${LYNCH_MESSAGE.BASE(name, votes)} \n Igrač ${name} je pogubljen! </p>`,
+  TIE: (votes, names, last) => `<p>Niko nije izglasan, ukupno ${votes} ${VOTES_PLURAL_ACUSATIVE(votes)} imaju ${names} i ${last}.</p>`,
+  JESTER: (votes, name) => `<p>${LYNCH_MESSAGE.LYNCHED(name, votes)} \n Igrač ${name} je bio ludak. \n Ludak je pobedio!</p>`,
+  EXECUTIONER: (votes, name, executioner) => `<p>${LYNCH_MESSAGE.LYNCHED(name, votes)} Igrač ${name} je bio meta dželata ${executioner} \n Dželat je pobedio!</p>`,
+  VISITOR: (votes, name) => `<p>${LYNCH_MESSAGE.LYNCHED(name, votes)} \n Igrač ${name} je bio posetilac. \n Pretnja je prestala!`
 }
 
 function VOTES_PLURAL_ACUSATIVE(votes) {
@@ -61,7 +78,9 @@ export const WIN_MESSAGE = {
 
 export const ROLE_MESSAGE = {
   MAFIA_VISIT: (players) => `Mafija je posetila: ${players}`,
-  VISITED: (player, visited) => `Igrač ${player} je posetio ${visited}`
+  VISITED: (player, visited) => `Igrač ${player} je posetio ${visited}`,
+  VISITOR_EVENT: `Posetilac je posetio ${CONFIG.VISITOR_NUMBER_OF_PLAYERS_MARKED} igrača. Ako nakon ${CONFIG.VISITOR_EVENT_NIGHTS} noći posetilac i dalje bude živ, posetilac pobeđuje!`,
+  VISITOR_STOPPED: `Posetilac je ubijen. Pretnja je nestala!`
 }
 
 export const UI_TEXT = {
@@ -162,7 +181,7 @@ export const STATUS = {
   FALSIFIED:"falsifikovan",
   RECORDED:"snimljen",
   JUDGED:"suđen",
-  MARKED_BY_WISITOR:"označen od posetioca",
+  MARKED_BY_VISITOR:"označen od posetioca",
   LOCKED_UP:"zatvoren",
   PARASITE_TARGET:"parazitovan"
 
