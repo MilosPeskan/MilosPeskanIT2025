@@ -120,7 +120,8 @@ export const ROLES = {
     role: "Amnezičar", 
     alignment: "Neutralna", 
     category: "Fleksibilna", 
-    description: "Tokom noći može preuzeti ulogu jednog mrtvog igrača." 
+    description: "Tokom noći može preuzeti ulogu jednog mrtvog igrača.",
+    hasMaximum: 1 
   },
   21: {
     role: "Trovač",
