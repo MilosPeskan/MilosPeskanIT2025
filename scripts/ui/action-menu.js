@@ -119,6 +119,7 @@ export class ActionMenu extends UiController {
                 const deadLabel = document.createElement("span");
                 deadLabel.className = "dead-label";
                 deadLabel.textContent = "†";
+                player.acted = true;
                 name.prepend(deadLabel);
             } else if(player.checkIfPlayerBlocked()){
                 card.classList.add("blocked-player");
@@ -126,6 +127,7 @@ export class ActionMenu extends UiController {
                 const blockLabel = document.createElement("span");
                 deadLabel.className = "block-label";
                 deadLabel.textContent = "⦸";
+                player.acted = true;
                 name.prepend(blockLabel);
             }
 
@@ -133,7 +135,7 @@ export class ActionMenu extends UiController {
             this.elements.playerHolder.appendChild(card);
         });
         const allCards = [...this.elements.playerHolder.querySelectorAll(".current-player-card")];
-        this.selectPlayer(this.findFirstNotActed(allCards));
+        this.selectPlayer(this.findFirstCanAct(allCards));
     }
 
     displayTargets() {        
@@ -337,12 +339,12 @@ export class ActionMenu extends UiController {
                     card.classList.add("acted")
                 }
             })
-            this.selectPlayer(this.findFirstNotActed(allCards));
+            this.selectPlayer(this.findFirstCanAct(allCards));
         }
     }
     
-    findFirstNotActed(cards){
-        return cards.find(card => card._player.acted === false)
+    findFirstCanAct(cards){
+        return cards.find(card => card._player.acted === false);
     }
 
     handleSkip() {
