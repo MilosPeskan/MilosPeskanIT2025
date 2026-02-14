@@ -1,4 +1,4 @@
-import { DEAD_ICON_PATH } from "../constants.js";
+import { DEAD_ICON_PATH, STATUS } from "../constants.js";
 import { UiController } from "./ui-controller.js";
 
 export class GameMenu extends UiController{
@@ -24,7 +24,7 @@ export class GameMenu extends UiController{
 
     attachEventListeners(){
         this.addEventListener(this.elements.nightButton, "click", ()=>{
-            this.onNightClicked?.();
+            this.handleNightClicked();
         });
         this.addEventListener(this.elements.backButton, "click", ()=>{
             this.onBackClick?.();
@@ -41,6 +41,13 @@ export class GameMenu extends UiController{
                 this.onPlayerCardClicked(div._player);
             }
         });
+    }
+
+    handleNightClicked(){
+        this.gameState.players.forEach(player => {
+            player.removeStatus(STATUS.JUDGED);
+        });
+        this.onNightClicked?.();
     }
 
     displayPlayers(){
