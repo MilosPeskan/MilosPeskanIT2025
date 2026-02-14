@@ -16,6 +16,7 @@ export class PlayerClass{
         this.visitedByMafia = false;
 
         this.acted = false;
+        this.remembered = false;
         this.votes = 0;
     }
 
@@ -37,6 +38,10 @@ export class PlayerClass{
         else{
             return `Igrača ${this.name} je posetio igrač ${listOfVisitors[0]}`;
         }
+    }
+
+    remember(){
+        this.remembered = true;
     }
 
     isVisitedBySpecificPlayer(player){
