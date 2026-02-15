@@ -339,24 +339,6 @@ button {
     100% { transform: scale(1); color: var(--btn-text);}
 }
 
-#back {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    height: 12vh;
-    aspect-ratio: 1;
-    margin: 1vh;
-    background-image: url(resourses/back.png);
-    background-color: transparent;
-    background-repeat: no-repeat;
-    outline: none;
-    border: none;
-    color:white;
-    background-size: contain;
-    background-position: center;
-    font-size: 90%;
-}
-
 .role-note{
     position: absolute;
     top: 0;
@@ -380,6 +362,22 @@ button {
 /* ============================================
    DARK NOVINSKI TEMA - GLOBALNI STILOVI
    ============================================ */
+
+#back {
+    position: absolute;
+    right: 0;
+    bottom: 0 !important;
+    height: 12vh;
+    aspect-ratio: 1;
+    margin: 1vh;
+    background-image: url(resourses/back.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    outline: none;
+    border: none;
+    background-size: contain;
+    background-position: center;
+}
 
 .newspaper-theme {
   /* Tamna charcoal pozadina sa plavim tonovima */
@@ -2010,6 +2008,34 @@ button {
     #roleSelection{
         flex-direction: column-reverse;
     }
+    .newspaper-header{
+        border-bottom: none;
+        padding-bottom: 20%;
+        background: transparent;
+        box-shadow: none;
+    }
+    .newspaper-subtitle{
+        display: none;
+    }
+    .newspaper-title{
+        display: none;
+    }
+    #hold-button{
+        height: 40vh;
+        aspect-ratio: 2/3;
+
+        filter: drop-shadow(0 15px 30px rgba(0,0,0,0.8));
+    }
+    #hide-role {
+        position: relative;
+        height: 20vh;
+    }
+    #role-holder{
+        padding: 0;
+        width: 90%;
+    }
+
+
 
     .target-grid {
         grid-template-columns: repeat(3, 1fr);
