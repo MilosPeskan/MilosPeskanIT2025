@@ -61,7 +61,7 @@
 
 body {
     max-width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     margin: 0;
     overflow-x: hidden;
     font-family: "Libre Baskerville";
@@ -235,10 +235,9 @@ button {
 }
 
 #deskripcija {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    align-self: center;
+    width: 50%;
     color: wheat;
     text-align: center;
 }
@@ -270,6 +269,7 @@ button {
     width: 100%; 
     height: 100%; 
 } 
+
 #list-of-players li{ 
     display: flex; 
     position: relative; 
@@ -1982,52 +1982,32 @@ button {
 }
 
 @media (max-width: 767px) {
-    #title {
-        position: absolute;
-        left: 50%;
-        top: -8%;
-        transform: translateX(-50%);
-        font-size: 10vh;
-    }
-    #playerInputForm{
-        position: absolute;
-        bottom: 50%;
-        left: 12%;
-        margin-bottom: 5vh;
-        align-items: center;
-        justify-items: center;
-    }
-    #playerListDivider{
-        left: 0;
-        bottom: 0;
-        width: 100vw;
-        height: 50%;
-        overflow-y: scroll;
-    }
-    #listOfPlayers {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(10, 1fr);
-        row-gap: 10px;
-    }
     .cardHolder {
         grid-template-columns: repeat(2, 1fr); 
-    }
-    #pravila {
-        position: absolute;
-        top: 10%;
-        margin: 1%;
-        height: fit-content;
-        background-color: #303d43;
-        outline: 2px solid rgb(255, 255, 255);
-        border: 2px solid rgb(0, 0, 0);
-        border-radius: 3px;
-        color: #f9f9f9;
-        z-index: 100;
     }
 }
 
 
 @media (max-width: 768px) {
+    #deskripcija{
+        font-size: 1em;
+        width: 80%;
+    }
+    #player-list-divider{
+        overflow-y: scroll;
+    }
+    #list-of-players {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(10, 1fr);
+        row-gap: 10px;
+    }
+    .delete-button{
+        position: absolute;
+        right: 12%;
+        top: 5%;
+        height: 50%;
+    }
+
     .target-grid {
         grid-template-columns: repeat(3, 1fr);
     }
