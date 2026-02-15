@@ -446,7 +446,6 @@ export class GameState{
     }
 
     checkIfVisitorAlive(){
-        console.log(this.players.filter(p => p.roleId == ROLE_IDS.POSETILAC)[0].isAlive)
         return this.players.filter(p => p.roleId == ROLE_IDS.POSETILAC)[0].isAlive;
     }
 
@@ -558,7 +557,7 @@ export class GameState{
     /**
      * Proveri ko je pobedio
      */
-    checkWinCondition() {        
+    checkWinCondition() {       
         if (this.visitorEvent) {
             return this.visitorEventMessage();
         }
@@ -584,13 +583,15 @@ export class GameState{
     checkLynchWinCondition(player, votes){
         if(player.roleId == ROLE_IDS.LUDAK) return this.jesterWin(player, votes);
         if(player === this.executionTarget) return this.executionerWin(player, votes);
-        if(!this.checkIfVisitorAlive() && this.mafiaWinCon() || !this.checkIfVisitorAlive() && this.townWinCon()) {
-            this.visitorEvent = false;
-            return `${LYNCH_MESSAGE.LYNCHED(player.name, votes)} \n ${ROLE_MESSAGE.VISITOR_STOPPED} \n ${this.checkWinCondition()}`;
-        }
-        if(!this.checkIfVisitorAlive()) {
-            this.visitorEvent = false;
-            return `${LYNCH_MESSAGE.LYNCHED(player.name, votes)} \n ${ROLE_MESSAGE.VISITOR_STOPPED}`;
+        if(this.visitorEvent){
+            if(!this.checkIfVisitorAlive() && this.mafiaWinCon() || !this.checkIfVisitorAlive() && this.townWinCon()) {
+                this.visitorEvent = false;
+                return `${LYNCH_MESSAGE.LYNCHED(player.name, votes)} \n ${ROLE_MESSAGE.VISITOR_STOPPED} \n ${this.checkWinCondition()}`;
+            }
+            if(!this.checkIfVisitorAlive()) {
+                this.visitorEvent = false;
+                return `${LYNCH_MESSAGE.LYNCHED(player.name, votes)} \n ${ROLE_MESSAGE.VISITOR_STOPPED}`;
+            }
         }
         if(this.mafiaWinCon() || this.townWinCon()) return `${LYNCH_MESSAGE.LYNCHED(player.name, votes)} \n ${this.checkWinCondition()}`;
         return LYNCH_MESSAGE.LYNCHED(player.name, votes);
