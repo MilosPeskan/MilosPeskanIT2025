@@ -1956,22 +1956,6 @@ button {
 }
 
 @media (max-width: 768px) {
-    .newspaper-title {
-        font-size: 2.5em;
-        letter-spacing: 4px;
-    }
-    
-    #player {
-        font-size: 2.5em;
-    }
-    
-    .wax-seal-container {
-        height: 35vh;
-    }
-}
-
-
-@media (max-width: 768px) {
     #deskripcija{
         font-size: 1em;
         width: 80%;
@@ -2020,6 +2004,9 @@ button {
     .newspaper-title{
         display: none;
     }
+    #player {
+        font-size: 2.5em;
+    }
     #hold-button{
         height: 40vh;
         aspect-ratio: 2/3;
@@ -2035,7 +2022,14 @@ button {
         width: 90%;
     }
 
+    #managerMenu{
+        height: auto;
+    }
 
+    .action-buttons {
+        background-color: red;
+        padding: 0px;
+    }
 
     .target-grid {
         grid-template-columns: repeat(3, 1fr);
