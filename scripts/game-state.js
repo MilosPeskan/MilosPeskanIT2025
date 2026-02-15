@@ -21,7 +21,8 @@ export class GameState{
             kills: new Map(), // attacker -> target
             bodyguard: new Map(), // bodyguard -> target
             silenced: [],
-            exposed: new Map() //attacker -> target
+            exposed: new Map(), //attacker -> target
+            parasited: new Map()
         };
 
         this.deaths = [];
@@ -355,7 +356,19 @@ export class GameState{
     }
 
     hasRemembered(players){
-        return players[0].remembered;
+        for(const player of players){
+            if(player.remembered){
+                return true;
+            }
+        }
+    }
+
+    hasParasitised(players){
+        for(const player of players){
+            if(player.wasParasite){
+                return true;
+            }
+        }
     }
 
     isEveryPlayerActed(players){
@@ -457,11 +470,19 @@ export class GameState{
         return message
     }
 
-    switchAmnesiacRoleInQueue(amnesiac, target){
+    switchRoleInQueue(player, target){
+        console.log(this.nightQueue)
         const targetRoleId = Number(target.roleId);
 
         let targetStep = this.nightQueue.find(step => step.roleId == targetRoleId);
-        targetStep.players.push(amnesiac)
+
+        if(target.isAlignment(ALIGNMENT.MAFIA)){
+            const mafiaGroup = this.nightQueue.find(entry => entry.roleId == ROLE_IDS.MAFIJAS);
+            mafiaGroup.players.push(player)
+        }
+        if(targetStep){
+            targetStep.players.push(player);
+        }
     }
 
     resetNight(){
@@ -475,7 +496,8 @@ export class GameState{
             kills: new Map(), 
             bodyguard: new Map(),
             silenced: [],
-            exposed: new Map()
+            exposed: new Map(),
+            parasited: new Map()
         };
     }
 
@@ -503,6 +525,7 @@ export class GameState{
                                 this.nightActions.exposed.set(attacker.name, target.name);
                             }
                             bodyguard.kill();
+                            this.checkIfParasitised(bodyguard);
                             this.deaths.push(bodyguard.name);
                             return;
                         }
@@ -510,12 +533,22 @@ export class GameState{
                             this.nightActions.exposed.set(attacker.name, target.name);
                         }
                         t.kill();
+                        this.checkIfParasitised(t);
                         this.deaths.push(t.name);
                     } else {
                         this.survived.push(t.name);
                     }
                 }
             }
+        }
+    }
+
+    checkIfParasitised(player){
+        if(this.nightActions.parasited.has(player)){
+            const parasite = this.nightActions.parasited.get(player);
+            parasite.roleId = player.roleId;
+            parasite.successParasite = true;
+            this.switchRoleInQueue(parasite, player);
         }
     }
 
