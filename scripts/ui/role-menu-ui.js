@@ -94,8 +94,11 @@ export class RoleMenu extends UiController{
 
         details.append(roleAlignment, roleCategory, roleDescription)
         
-        const controls = this.createRoleControls(id);
-    
+        let controls
+        if(!data.toBeAdded){
+            controls = this.createRoleControls(id);
+        }else controls = "Bice dodato"
+
         roleCard.append(roleName, details, expand, controls)
         if(data.hasMaximum){
             const note = document.createElement("p");
