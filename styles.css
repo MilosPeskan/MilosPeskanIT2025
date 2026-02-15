@@ -115,13 +115,6 @@ button {
     overflow: hidden;
 }
 
-#subtitle {
-    display: flex;
-    justify-content: center;
-    color: wheat;
-    width: 100%;
-}
-
 #blood{
     position: fixed;
     width: auto;
@@ -880,10 +873,6 @@ button {
     }
 }
 
-.responsive-phone{
-    display: none;
-}
-
 /* Ambient light particles (opciono) */
 @keyframes float {
     0%, 100% {
@@ -896,40 +885,6 @@ button {
     }
 }
 
-/* ============================================
-   RESPONSIVE - DARK
-   ============================================ */
-
-@media (max-width: 768px) {
-    .newspaper-title {
-        font-size: 2.5em;
-        letter-spacing: 4px;
-    }
-    
-    #player {
-        font-size: 2.5em;
-    }
-
-    .responsive-phone{
-        display: block;
-    }
-
-    .responsive-desktop{
-        display: none;
-    }
-  
-    #role-selection-content {
-        padding: 30px 20px;
-    }
-    
-    #role-holder {
-        padding: 30px 20px;
-    }
-    
-    .wax-seal-container {
-        height: 35vh;
-    }
-}
 
 .cardHolder {
     height: 100%;
@@ -945,6 +900,14 @@ button {
 
 #settingsMenu {
     height: auto;
+}
+
+#subtitle {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: wheat;
+    width: 100%;
 }
 
 .card {
@@ -1026,6 +989,19 @@ button {
 
 .card[data-alignment="Neutralno"] .role-alignment{
     color: var(--colorNeutralAccent);
+}
+
+.details-hide{
+    display: none;
+}
+
+.details-show{
+    display: block;
+}
+
+.role-expand{
+    display: none;
+    align-self: center;
 }
 
 .role-category {
@@ -1981,9 +1957,18 @@ button {
     }
 }
 
-@media (max-width: 767px) {
-    .cardHolder {
-        grid-template-columns: repeat(2, 1fr); 
+@media (max-width: 768px) {
+    .newspaper-title {
+        font-size: 2.5em;
+        letter-spacing: 4px;
+    }
+    
+    #player {
+        font-size: 2.5em;
+    }
+    
+    .wax-seal-container {
+        height: 35vh;
     }
 }
 
@@ -2006,6 +1991,24 @@ button {
         right: 12%;
         top: 5%;
         height: 50%;
+    }
+
+    .cardHolder {
+        grid-template-columns: repeat(1, 1fr); 
+    }
+    .role-name{
+        justify-content: center;
+        text-align: center;
+    }
+    .role-expand{
+        display: block;
+    }
+    .start {
+        width: 50vw;
+    }
+
+    #roleSelection{
+        flex-direction: column-reverse;
     }
 
     .target-grid {
